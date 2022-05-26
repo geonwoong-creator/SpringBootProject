@@ -26,7 +26,7 @@
 </head>
 <body>
 <script>
-
+location.href="/main/main"
 </script>
 </body>
 </html>
