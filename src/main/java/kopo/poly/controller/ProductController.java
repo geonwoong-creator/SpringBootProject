@@ -1,17 +1,22 @@
 package kopo.poly.controller;
 
-import kopo.poly.dto.NoticeDTO;
-import kopo.poly.service.INoticeService;
+import kopo.poly.dto.ProductDTO;
+import kopo.poly.service.IProductService;
 import kopo.poly.util.CmmUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,36 +24,36 @@ import java.util.List;
 /*
  * Controller 선언해야만 Spring 프레임워크에서 Controller인지 인식 가능
  * 자바 서블릿 역할 수행
- * 
+ *
  * slf4j는 스프링 프레임워크에서 로그 처리하는 인터페이스 기술이며,
  * 로그처리 기술인 log4j와 logback과 인터페이스 역할 수행함
  * 스프링 프레임워크는 기본으로 logback을 채택해서 로그 처리함
  * */
 @Slf4j
 @Controller
-public class NoticeController {
+public class ProductController {
 
     /*
 
      * 비즈니스 로직(중요 로직을 수행하기 위해 사용되는 서비스를 메모리에 적재(싱글톤패턴 적용됨)
      */
-    @Resource(name = "NoticeService")
-    private INoticeService noticeService;
+    @Resource(name = "ProductService")
+    private IProductService productService;
 
     /**
      * 게시판 리스트 보여주기
      *
      * GetMapping(value = "notice/NoticeList") =>  GET방식을 통해 접속되는 URL이 notice/NoticeList인 경우 아래 함수를 실행함
      */
-    @GetMapping(value = "notice/NoticeList")
-    public String NoticeList(ModelMap model)
+    @GetMapping(value = "product/ProductList")
+    public String ProductList(ModelMap model)
             throws Exception {
 
         // 로그 찍기(추후 찍은 로그를 통해 이 함수에 접근했는지 파악하기 용이하다.)
-        log.info(this.getClass().getName() + ".NoticeList start!");
+        log.info(this.getClass().getName() + ".ProductList start!");
 
         // 공지사항 리스트 가져오기
-        List<NoticeDTO> rList = noticeService.getNoticeList();
+        List<ProductDTO> rList = productService.getProductList();
         log.info("rList : " +rList);
         if (rList == null) {
             rList = new ArrayList<>();
@@ -59,10 +64,10 @@ public class NoticeController {
         model.addAttribute("rList", rList);
 
         // 로그 찍기(추후 찍은 로그를 통해 이 함수 호출이 끝났는지 파악하기 용이하다.)
-        log.info(this.getClass().getName() + ".NoticeList end!");
+        log.info(this.getClass().getName() + ".ProductList end!");
 
         // 함수 처리가 끝나고 보여줄 JSP 파일명(/WEB-INF/view/notice/NoticeList.jsp)
-        return "/notice/NoticeList";
+        return "/product/ProductList";
 
     }
 
@@ -74,23 +79,23 @@ public class NoticeController {
      *
      * GetMapping(value = "notice/NoticeReg") =>  GET방식을 통해 접속되는 URL이 notice/NoticeReg인 경우 아래 함수를 실행함
      */
-    @GetMapping(value = "notice/NoticeReg")
-    public String NoticeReg() {
+    @GetMapping(value = "product/ProductReg")
+    public String ProductReg() {
 
-        log.info(this.getClass().getName() + ".NoticeReg start!");
+        log.info(this.getClass().getName() + ".ProductReg start!");
 
-        log.info(this.getClass().getName() + ".NoticeReg end!");
+        log.info(this.getClass().getName() + ".ProductReg end!");
 
-        return "/notice/NoticeReg";
+        return "/product/ProductReg";
     }
 
     /**
      * 게시판 글 등록
      */
-    @PostMapping(value = "notice/NoticeInsert")
-    public String NoticeInsert(HttpSession session, HttpServletRequest request, ModelMap model) {
+    @PostMapping(value = "product/ProductInsert")
+    public String NoticeInsert(HttpSession session, HttpServletRequest request, ModelMap model, @RequestPart MultipartFile files) {
 
-        log.info(this.getClass().getName() + ".NoticeInsert start!");
+        log.info(this.getClass().getName() + ".ProductInsert start!");
 
         String msg = "";
 
@@ -99,9 +104,14 @@ public class NoticeController {
              * 게시판 글 등록되기 위해 사용되는 form객체의 하위 input 객체 등을 받아오기 위해 사용함
              */
             String user_id = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
-            String title = CmmUtil.nvl(request.getParameter("title")); // 제목
-            String noticeYn = CmmUtil.nvl(request.getParameter("noticeYn")); // 공지글 여부
+            String product_name = CmmUtil.nvl(request.getParameter("product_name")); // 제목
+            String addr = CmmUtil.nvl(request.getParameter("addr")); // 공지글 여부
             String contents = CmmUtil.nvl(request.getParameter("contents")); // 내용
+            String filename = files.getOriginalFilename();
+            String filenameExtension = FilenameUtils.getExtension(filename).toLowerCase();
+            File destinationFile;
+            String destinationFileName = null;
+            String fileUrl = "C:\\lasthope\\SpringBootPRJ (1)\\src\\main\\webapp\\WEB-INF\\uploadFiles\\";
 
             /*
              * ####################################################################################
@@ -109,21 +119,33 @@ public class NoticeController {
              * ####################################################################################
              */
             log.info("user_id : " + user_id);
-            log.info("title : " + title);
-            log.info("noticeYn : " + noticeYn);
+            log.info("product_name : " + product_name);
+            log.info("addr : " + addr);
             log.info("contents : " + contents);
 
-            NoticeDTO pDTO = new NoticeDTO();
+            ProductDTO pDTO = new ProductDTO();
+
+
+            do {
+                destinationFileName  = RandomStringUtils.randomAlphanumeric(32) + "." + filenameExtension;
+                destinationFile = new File(fileUrl + destinationFileName);
+            }while (destinationFile.exists());
+
+            destinationFile.getParentFile().mkdir();
+            files.transferTo(destinationFile);
 
             pDTO.setUser_id(user_id);
-            pDTO.setTitle(title);
-            pDTO.setNotice_yn(noticeYn);
+            pDTO.setProduct_name(product_name);
+            pDTO.setAddr(addr);
             pDTO.setContents(contents);
+            pDTO.setFilename(destinationFileName);
+            pDTO.setFileoriname(filename);
+            pDTO.setFileurl(fileUrl);
 
             /*
              * 게시글 등록하기위한 비즈니스 로직을 호출
              */
-            noticeService.InsertNoticeInfo(pDTO);
+            productService.InsertProduct(pDTO);
 
             // 저장이 완료되면 사용자에게 보여줄 메시지
             msg = "등록되었습니다.";
@@ -144,16 +166,16 @@ public class NoticeController {
 
         }
 
-        return "/notice/MsgToList";
+        return "/product/MsgToList";
     }
 
     /**
      * 게시판 상세보기
      */
-    @GetMapping(value = "notice/NoticeInfo")
-    public String NoticeInfo(HttpServletRequest request, ModelMap model) {
+    @GetMapping(value = "product/ProductInfo")
+    public String ProductInfo(HttpServletRequest request, ModelMap model) {
 
-        log.info(this.getClass().getName() + ".NoticeInfo start!");
+        log.info(this.getClass().getName() + ".ProductInfo start!");
 
         String msg = "";
 
@@ -173,18 +195,18 @@ public class NoticeController {
             /*
              * 값 전달은 반드시 DTO 객체를 이용해서 처리함 전달 받은 값을 DTO 객체에 넣는다.
              */
-            NoticeDTO pDTO = new NoticeDTO();
-            pDTO.setNotice_seq(nSeq);
+            ProductDTO pDTO = new ProductDTO();
+            pDTO.setProduct_seq(nSeq);
 
             // 공지사항 상세정보 가져오기
-            NoticeDTO rDTO = noticeService.getNoticeInfo(pDTO);
+            ProductDTO rDTO = productService.getProduct(pDTO);
 
             if (rDTO == null) {
-                rDTO = new NoticeDTO();
+                rDTO = new ProductDTO();
 
             }
 
-            log.info("getNoticeInfo success!!!");
+            log.info("getProductInfo success!!!");
 
             // 조회된 리스트 결과값 넣어주기
             model.addAttribute("rDTO", rDTO);
@@ -205,18 +227,18 @@ public class NoticeController {
 
         }
 
-        log.info(this.getClass().getName() + ".NoticeInfo end!");
+        log.info(this.getClass().getName() + ".ProductInfo end!");
 
-        return "/notice/NoticeInfo";
+        return "/product/ProductInfo";
     }
 
     /**
      * 게시판 수정 보기
      */
-    @GetMapping(value = "notice/NoticeEditInfo")
-    public String NoticeEditInfo(HttpServletRequest request, ModelMap model) {
+    @GetMapping(value = "product/ProductEditInfo")
+    public String ProductEditInfo(HttpServletRequest request, ModelMap model) {
 
-        log.info(this.getClass().getName() + ".NoticeEditInfo start!");
+        log.info(this.getClass().getName() + ".ProductEditInfo start!");
 
         String msg = "";
 
@@ -226,19 +248,19 @@ public class NoticeController {
 
             log.info("nSeq : " + nSeq);
 
-            NoticeDTO pDTO = new NoticeDTO();
+            ProductDTO pDTO = new ProductDTO();
 
-            pDTO.setNotice_seq(nSeq);
+            pDTO.setProduct_seq(nSeq);
 
             /*
              * ####################################################### 공지사항 수정정보 가져오기(상세보기
              * 쿼리와 동일하여, 같은 서비스 쿼리 사용함)
              * #######################################################
              */
-            NoticeDTO rDTO = noticeService.getNoticeInfo(pDTO);
+            ProductDTO rDTO = productService.getProduct(pDTO);
 
             if (rDTO == null) {
-                rDTO = new NoticeDTO();
+                rDTO = new ProductDTO();
 
             }
 
@@ -258,15 +280,15 @@ public class NoticeController {
 
         }
 
-        log.info(this.getClass().getName() + ".NoticeEditInfo end!");
+        log.info(this.getClass().getName() + ".ProductEditInfo end!");
 
-        return "/notice/NoticeEditInfo";
+        return "/product/ProductEditInfo";
     }
 
     /**
      * 게시판 글 수정
      */
-    @PostMapping(value = "notice/NoticeUpdate")
+    @PostMapping(value = "product/ProductUpdate")
     public String NoticeUpdate(HttpSession session, HttpServletRequest request, ModelMap model) {
 
         log.info(this.getClass().getName() + ".NoticeUpdate start!");
@@ -277,26 +299,26 @@ public class NoticeController {
 
             String user_id = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID")); // 아이디
             String nSeq = CmmUtil.nvl(request.getParameter("nSeq")); // 글번호(PK)
-            String title = CmmUtil.nvl(request.getParameter("title")); // 제목
-            String noticeYn = CmmUtil.nvl(request.getParameter("noticeYn")); // 공지글 여부
+            String product_name = CmmUtil.nvl(request.getParameter("product_name")); // 제목
+            String addr = CmmUtil.nvl(request.getParameter("addr")); // 공지글 여부
             String contents = CmmUtil.nvl(request.getParameter("contents")); // 내용
 
             log.info("user_id : " + user_id);
             log.info("nSeq : " + nSeq);
-            log.info("title : " + title);
-            log.info("noticeYn : " + noticeYn);
+            log.info("product_name : " + product_name);
+            log.info("addr : " + addr);
             log.info("contents : " + contents);
 
-            NoticeDTO pDTO = new NoticeDTO();
+            ProductDTO pDTO = new ProductDTO();
 
             pDTO.setUser_id(user_id);
-            pDTO.setNotice_seq(nSeq);
-            pDTO.setTitle(title);
-            pDTO.setNotice_yn(noticeYn);
+            pDTO.setProduct_seq(nSeq);
+            pDTO.setProduct_name(product_name);
+            pDTO.setAddr(addr);
             pDTO.setContents(contents);
 
             // 게시글 수정하기 DB
-            noticeService.updateNoticeInfo(pDTO);
+            productService.updateProduct(pDTO);
 
             msg = "수정되었습니다.";
 
@@ -306,23 +328,23 @@ public class NoticeController {
             e.printStackTrace();
 
         } finally {
-            log.info(this.getClass().getName() + ".NoticeUpdate end!");
+            log.info(this.getClass().getName() + ".ProductUpdate end!");
 
             // 결과 메시지 전달하기
             model.addAttribute("msg", msg);
 
         }
 
-        return "/notice/MsgToList";
+        return "/product/MsgToList";
     }
 
     /**
      * 게시판 글 삭제
      */
-    @GetMapping(value = "notice/NoticeDelete")
+    @GetMapping(value = "product/ProductDelete")
     public String NoticeDelete(HttpServletRequest request, ModelMap model) {
 
-        log.info(this.getClass().getName() + ".NoticeDelete start!");
+        log.info(this.getClass().getName() + ".ProductDelete start!");
 
         String msg = "";
 
@@ -332,12 +354,12 @@ public class NoticeController {
 
             log.info("nSeq : " + nSeq);
 
-            NoticeDTO pDTO = new NoticeDTO();
+            ProductDTO pDTO = new ProductDTO();
 
-            pDTO.setNotice_seq(nSeq);
+            pDTO.setProduct_seq(nSeq);
 
             // 게시글 삭제하기 DB
-            noticeService.deleteNoticeInfo(pDTO);
+            productService.deleteProduct(pDTO);
 
             msg = "삭제되었습니다.";
 
@@ -347,14 +369,14 @@ public class NoticeController {
             e.printStackTrace();
 
         } finally {
-            log.info(this.getClass().getName() + ".NoticeDelete end!");
+            log.info(this.getClass().getName() + ".ProductDelete end!");
 
             // 결과 메시지 전달하기
             model.addAttribute("msg", msg);
 
         }
 
-        return "/notice/MsgToList";
+        return "/product/MsgToList";
     }
 
 }
