@@ -54,7 +54,7 @@ public class ProductController {
 
         // 공지사항 리스트 가져오기
         List<ProductDTO> rList = productService.getProductList();
-        log.info("rList : " +rList);
+        log.info("rList : " + rList);
         if (rList == null) {
             rList = new ArrayList<>();
 
@@ -70,6 +70,10 @@ public class ProductController {
         return "/product/ProductList";
 
     }
+
+
+
+
 
     /**
      * 게시판 작성 페이지 이동
@@ -111,7 +115,7 @@ public class ProductController {
             String filenameExtension = FilenameUtils.getExtension(filename).toLowerCase();
             File destinationFile;
             String destinationFileName = null;
-            String fileUrl = "C:\\lasthope\\SpringBootPRJ (1)\\src\\main\\webapp\\WEB-INF\\uploadFiles\\";
+            String fileUrl = "C:\\lasthope\\SpringBootPRJ (1)\\src\\main\\resources\\static\\assets\\upload\\";
 
             /*
              * ####################################################################################
@@ -142,6 +146,7 @@ public class ProductController {
             pDTO.setFileoriname(filename);
             pDTO.setFileurl(fileUrl);
 
+
             /*
              * 게시글 등록하기위한 비즈니스 로직을 호출
              */
@@ -168,6 +173,7 @@ public class ProductController {
 
         return "/product/MsgToList";
     }
+
 
     /**
      * 게시판 상세보기
@@ -200,7 +206,8 @@ public class ProductController {
 
             // 공지사항 상세정보 가져오기
             ProductDTO rDTO = productService.getProduct(pDTO);
-
+            log.info("rDTO " + rDTO.getProduct_seq());
+            log.info("rDTO " + rDTO.getProduct_seq());
             if (rDTO == null) {
                 rDTO = new ProductDTO();
 

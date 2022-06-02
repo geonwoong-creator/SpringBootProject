@@ -68,6 +68,7 @@ function calBytes(str){
 	</tr>		
 	</table>
 </form>
+
 <!-- 프로세스 처리용 iframe / form 태그에서 target을 iframe으로 한다. -->
 <iframe name="ifrPrc" style="display:none"></iframe>
 </body>

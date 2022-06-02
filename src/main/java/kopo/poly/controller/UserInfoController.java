@@ -292,4 +292,6 @@ public class UserInfoController {
 
         return "/user/LoginResult";
     }
+
+
 }

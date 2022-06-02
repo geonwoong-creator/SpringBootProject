@@ -176,6 +176,7 @@
                             %>
                             <tr>
                                 <td align="center">
+                                    <%=CmmUtil.nvl(rDTO.getProduct_seq())%>
                                 </td>
                                 <td align="center">
                                     <a href="javascript:doDetail('<%=CmmUtil.nvl(rDTO.getProduct_seq())%>');">

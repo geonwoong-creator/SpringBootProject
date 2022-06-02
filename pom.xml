@@ -98,6 +98,13 @@
             <version>2.5</version>
         </dependency>
 
+        <!--jsp파일 서버 재시작 없이 바로 적용하기 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+
+
 
 
 

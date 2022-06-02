@@ -16,11 +16,11 @@
     <insert id="insertProduct" parameterType="ProductDTO">
         INSERT INTO PRODUCT
         (
-            PRODUCT_SEQ, PRODUCT_NAME, ADDR, CONTENTS, FILENAME, FILEORINAME, FILEURL, USER_ID, READ_CNT,
+             PRODUCT_NAME, ADDR, CONTENTS, FILENAME, FILEORINAME, FILEURL, USER_ID, READ_CNT,
             REG_ID, REG_DT, CHG_ID, CHG_DT
         )
         VALUES(
-                      (SELECT NULLIF (MAX(A.PRODUCT_SEQ),0)+1 FROM PRODUCT A),
+
                       #{product_name}, #{addr}, #{contents}, #{filename}, #{fileoriname}, #{fileurl}, #{user_id}, 0, #{user_id}, SYSDATE(), #{user_id}, SYSDATE()
               )
     </insert>
