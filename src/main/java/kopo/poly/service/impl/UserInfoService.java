@@ -10,6 +10,7 @@ import kopo.poly.util.DateUtil;
 import kopo.poly.util.EncryptUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -185,6 +186,8 @@ public class UserInfoService implements IUserInfoService {
 
         }
 
+
+
         /*
          * #######################################################
          *        				비밀번호 찾기 성공 여부 체크 시작!!
@@ -214,8 +217,10 @@ public class UserInfoService implements IUserInfoService {
 
             mDTO.setTitle("비밀번호 찾기!"); //제목
 
+            String url = "localhost:10000/resetPassword?id=" + pDTO.getUser_id();
             //메일 내용에 가입자 비밀번호 넣어서 내용 발송
-            mDTO.setContents(DateUtil.getDateTime("yyyy.MM.dd 24h:mm:ss") + "에 " + CmmUtil.nvl(rDTO.getUser_name()) + "님이 비밀번호를 찾으셨습니다. " + EncryptUtil.decAES128CBC(CmmUtil.nvl(rDTO.getPassword())));
+            mDTO.setContents(DateUtil.getDateTime("yyyy.MM.dd 24h:mm:ss") + "에 " + CmmUtil.nvl(rDTO.getUser_name()) + "님이 비밀번호를 찾으셨습니다. " + url);
+
 
             //비밀 번호 찾기가 성공했기 때문에 메일을 발송함
             mailService.doSendMail(mDTO);
@@ -236,5 +241,14 @@ public class UserInfoService implements IUserInfoService {
          */
 
         return res;
+    }
+
+    @Transactional
+    @Override
+    public void updatePassword(UserInfoDTO pDTO) throws Exception {
+
+        log.info(this.getClass().getName() + ".updatePassword start!");
+
+        userInfoMapper.updatePassword(pDTO);
     }
 }

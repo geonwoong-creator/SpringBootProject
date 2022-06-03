@@ -7,6 +7,8 @@ import kopo.poly.util.EncryptUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
@@ -102,7 +104,7 @@ public class UserInfoController {
             pDTO.setUser_name(user_name);
 
             //비밀번호는 절대로 복호화되지 않도록 해시 알고리즘으로 암호화함
-            pDTO.setPassword(EncryptUtil.encAES128CBC(password));
+            pDTO.setPassword(EncryptUtil.encHashSHA256(password));
 
             //민감 정보인 이메일은 AES128-CBC로 암호화함
             pDTO.setEmail(EncryptUtil.encAES128CBC(email));
@@ -231,7 +233,7 @@ public class UserInfoController {
             pDTO.setUser_id(user_id);
 
             //비밀번호는 절대로 복호화되지 않도록 해시 알고리즘으로 암호화함
-            pDTO.setPassword(EncryptUtil.encAES128CBC(password));
+            pDTO.setPassword(EncryptUtil.encHashSHA256(password));
 
             /*
              * ########################################################################
@@ -294,7 +296,7 @@ public class UserInfoController {
     }
 
 
-    //비밀번호찾기
+    //비밀번호변경
 
     @RequestMapping(value = "user/ForgetPasswordForm")
     public String forgetPasswordForm() {
@@ -390,7 +392,7 @@ public class UserInfoController {
              * */
             if (res == 1) { //로그인 성공
 
-
+                session.setAttribute("SS_USER_ID", user_id);
             }
 
         } catch (Exception e) {
@@ -414,6 +416,56 @@ public class UserInfoController {
         }
 
         return "/user/PasswordResult";
+    }
+
+    @GetMapping(value = "resetPassword")
+    public String resetPassword (HttpSession session,HttpServletRequest request, ModelMap model) throws Exception {
+
+        log.info(this.getClass().getName() + ".resetPassword page start!");
+        String user_id = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
+        log.info("user_id : " + user_id);
+
+        model.addAttribute("user_id", user_id);
+
+
+
+        return  "/user/ResetPassword";
+    }
+
+    @PostMapping(value = "user/resetPassword")
+    public String userresetPassword (HttpSession session,HttpServletRequest request, ModelMap model) throws Exception {
+
+        log.info(this.getClass().getName() + ".resetPassword Start!");
+
+        String msg = "";
+
+        try {
+            String user_id = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
+            String password = CmmUtil.nvl(request.getParameter("password"));
+
+            log.info("user_id : " + user_id);
+
+            UserInfoDTO pDTO = new UserInfoDTO();
+
+            pDTO.setUser_id(user_id);
+            pDTO.setPassword(EncryptUtil.encHashSHA256(password));
+
+            userInfoService.updatePassword(pDTO);
+
+            msg = "수정되었습니다";
+        } catch (Exception e) {
+            msg = "실패하였습니다 : " + e.getMessage();
+            log.info(e.toString());
+            e.printStackTrace();
+
+        } finally {
+            log.info(this.getClass().getName() + ".PasswordUpdate End!");
+
+            //결과 메시지 전달하기
+            model.addAttribute("msg", msg);
+        }
+
+        return "/user/PasswordToMsg";
     }
 
 

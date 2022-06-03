@@ -157,14 +157,14 @@
                         <input type="button" onclick="noticeED()" value="글쓰기" />
                     </div>
                     <div class="card-body">
-                        <table id="datatablesSimple">
-                            <tr>
-                                <td width="100" align="center">순번</td>
-                                <td width="200" align="center">제목</td>
-                                <td width="100" align="center">조회수</td>
-                                <td width="100" align="center">등록자</td>
-                                <td width="100" align="center">등록일</td>
-                            </tr>
+                        <div class="card-body" style="text-align: center">
+                            <div class="row btn-light">
+                                <div class="col-2 btn-light">순번</div>
+                                <div class="col-4 btn-danger">제목</div>
+                                <div class="col-2 btn-primary">조회수</div>
+                                <div class="col-2 btn-warning">등록자</div>
+                                <div class="col-2 btn-success">등록일</div>
+                            </div>
                             <%
                                 for (int i = 0; i < rList.size(); i++) {
                                     ProductDTO rDTO = rList.get(i);
@@ -174,26 +174,26 @@
                                     }
 
                             %>
-                            <tr>
-                                <td align="center">
+                            <div class="row">
+                                <div class="col-2">
                                     <%=CmmUtil.nvl(rDTO.getProduct_seq())%>
-                                </td>
-                                <td align="center">
+                                </div>
+                                <div class="col-4">
                                     <a href="javascript:doDetail('<%=CmmUtil.nvl(rDTO.getProduct_seq())%>');">
                                         <%=CmmUtil.nvl(rDTO.getProduct_name()) %>
                                     </a>
-                                </td>
-                                <td align="center"><%=CmmUtil.nvl(rDTO.getRead_cnt()) %>
-                                </td>
-                                <td align="center"><%=CmmUtil.nvl(rDTO.getUser_id()) %>
-                                </td>
-                                <td align="center"><%=CmmUtil.nvl(rDTO.getReg_dt()) %>
-                                </td>
-                            </tr>
+                                </div>
+                                <div class="col-2"><%=CmmUtil.nvl(rDTO.getRead_cnt()) %>
+                                </div>
+                                <div class="col-2"><%=CmmUtil.nvl(rDTO.getUser_id()) %>
+                                </div>
+                                <div class="col-2"><%=CmmUtil.nvl(rDTO.getReg_dt()) %>
+                                </div>
+                            </div>
                             <%
                                 }
                             %>
-                        </table>
+                        </div>
                     </div>
                 </div>
             </div>
