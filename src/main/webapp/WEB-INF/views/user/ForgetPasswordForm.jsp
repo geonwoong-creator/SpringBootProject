@@ -3,34 +3,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script type="text/javascript">
-        //로그인을 위한 입력정보의 유효성 체크하기
-        function doLoginUserCheck(f){
-
-            if (f.user_id.value==""){
-                alert("아이디를 입력하세요.");
-                f.user_id.focus();
-                return false;
-            }
-
-            if (f.password.value==""){
-                alert("비밀번호를 입력하세요.");
-                f.password.focus();
-                return false;
-            }
-
-        }
-
-        function userregForm() { //회원가입
-            location.href="/user/userRegForm"
-        }
-    </script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Login - SB Admin</title>
+    <title>Password Reset - SB Admin</title>
     <link href="/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 </head>
@@ -42,29 +20,26 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
-                            <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
+                            <div class="card-header"><h3 class="text-center font-weight-light my-4">Password Recovery</h3></div>
                             <div class="card-body">
-                                <form name="f" method="post" accept-charset="UTF-8" action="/user/getUserLoginCheck" onsubmit="return doLoginUserCheck(this);">
+                                <div class="small mb-3 text-muted">Enter your email address and we will send you a link to reset your password.</div>
+                                <form name="f" method="post" accept-charset="UTF-8" action="/user/forgetPassword">
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="inputEmail" name="user_id" type="text" placeholder="name@example.com" />
-                                        <label for="inputEmail">User ID</label>
+                                        <input class="form-control" id="inputid" name="user_id" type="text" placeholder="userID" />
+                                        <label for="inputid">ID</label>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="inputPassword" name="password" type="password" placeholder="Password" />
-                                        <label for="inputPassword">Password</label>
-                                    </div>
-                                    <div class="form-check mb-3">
-                                        <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
-                                        <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
+                                        <input class="form-control" id="inputEmail" name="email" type="email" placeholder="name@example.com" />
+                                        <label for="inputEmail">Email address</label>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                        <a class="small" href="/user/ForgetPasswordForm">Forgot Password?</a>
-                                        <input type="submit" class="btn btn-primary" value="로그인" />
+                                        <a class="small" href="user/LoginForm">Return to login</a>
+                                        <input type="submit" class="btn btn-primary" value="비밀번호 찾기" />
                                     </div>
                                 </form>
                             </div>
                             <div class="card-footer text-center py-3">
-                                <div class="small"><input type="button" onclick="userregForm()" value="회원가입" /></div>
+                                <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
                             </div>
                         </div>
                     </div>

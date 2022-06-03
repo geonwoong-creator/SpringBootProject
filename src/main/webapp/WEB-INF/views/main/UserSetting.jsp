@@ -121,11 +121,27 @@
     </div>
     <div id="layoutSidenav_content">
         <main>
-            <div class="container-fluid px-4">
-                아이디<%=session.getAttribute("SS_USER_ID")%>님
-                이름<%=CmmUtil.nvl(rDTO.getUser_name())%>님
-                이메일<%=CmmUtil.nvl(rDTO.getEmail())%>
-            </div>
+           <div class="card-body">
+               <table class="dataTablesSimlpe">
+                   <tr>
+
+                       <td>
+                          아이디 <%=session.getAttribute("SS_USER_ID")%>님
+                       </td>
+                   </tr>
+                   <tr>
+                       <td>
+                           이름<%=CmmUtil.nvl(rDTO.getUser_name())%>님
+                       </td>
+                   </tr>
+                   <tr>
+                       <td>
+                           이메일<%=CmmUtil.nvl(rDTO.getEmail())%>님
+                       </td>
+                   </tr>
+               </table>
+
+           </div>
         </main>
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">
