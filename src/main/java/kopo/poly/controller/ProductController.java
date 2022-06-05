@@ -2,10 +2,10 @@ package kopo.poly.controller;
 
 import kopo.poly.dto.ProductDTO;
 import kopo.poly.service.IProductService;
+import kopo.poly.service.IS3Service;
 import kopo.poly.util.CmmUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +39,8 @@ public class ProductController {
      */
     @Resource(name = "ProductService")
     private IProductService productService;
+    @Resource(name = "S3Service")
+    private  IS3Service s3Service;
 
     /**
      * 게시판 리스트 보여주기
@@ -115,7 +117,7 @@ public class ProductController {
             String filenameExtension = FilenameUtils.getExtension(filename).toLowerCase();
             File destinationFile;
             String destinationFileName = null;
-            String fileUrl = "C:\\lasthope\\SpringBootPRJ (1)\\src\\main\\resources\\static\\assets\\upload\\";
+            String fileUrl = s3Service.uploadImageInS3(files, "upload");
 
             /*
              * ####################################################################################

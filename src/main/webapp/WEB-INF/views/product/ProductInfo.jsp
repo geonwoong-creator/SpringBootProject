@@ -111,7 +111,7 @@
     <tr>
         <td colspan="5" height="300px" valign="top">
 
-            <img src="/assets/upload/<%=CmmUtil.nvl(rDTO.getFilename())%>" />
+            <img src="<%=CmmUtil.nvl(rDTO.getFileurl())%>" />
         </td>
     </tr>
     <tr>
@@ -142,13 +142,13 @@
     // 지도를 생성합니다
     var map = new kakao.maps.Map(mapContainer, mapOption);
 
+    let juso = "<%=CmmUtil.nvl(rDTO.getProduct_name())%>";
     // 주소-좌표 변환 객체를 생성합니다
     var geocoder = new kakao.maps.services.Geocoder();
 
 
-    let juso = "<%=CmmUtil.nvl(rDTO.getProduct_name())%>";
     // 주소로 좌표를 검색합니다
-    geocoder.addressSearch("<%=CmmUtil.nvl(rDTO.getAddr())%>", function(result, status) {
+    geocoder.addressSearch('<%=CmmUtil.nvl(rDTO.getAddr())%>', function(result, status) {
 
         // 정상적으로 검색이 완료됐으면
         if (status === kakao.maps.services.Status.OK) {
