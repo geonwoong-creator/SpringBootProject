@@ -17,7 +17,7 @@ public class MailService implements IMailService {
 
     final String host = "smtp.naver.com"; // 네이버에서 제공하는 SMTP서버
     final String user = "rjsdnd0420@naver.com"; // 본인 네이버 아이디
-    final String password = "$$tls4dk20"; // 본인 네이버 아이디
+    final String password = "//"; // 본인 네이버 아이디
 
     @Override
     public int doSendMail(MailDTO pDTO) {
