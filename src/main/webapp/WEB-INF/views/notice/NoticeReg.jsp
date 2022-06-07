@@ -199,31 +199,31 @@
 					</div>
 					<div class="card-body">
 						<form name="f" method="post" action="/notice/NoticeInsert" target= "ifrPrc" onsubmit="return doSubmit(this);">
-						<table id="datatablesSimple">
+						<div id="card-body" style="text-align: center">
 							<col width="100px" />
 							<col width="500px" />
-							<tr>
-								<td align="center">제목</td>
-								<td><input type="text" name="title" maxlength="100" style="width: 450px" /></td>
-							</tr>
-							<tr>
-								<td align="center">공지글 여부</td>
-								<td>예<input type="radio" name="noticeYn" value="Y" />
+							<div class="row btn-light">
+								<div class="col-2" >제목</div>
+								<div class="col-2"><input type="text" name="title" maxlength="100" style="width: 450px" /></div>
+							</div>
+							<div class="row">
+								<div class="col-2" align="center">공지글 여부</div>
+								<div class="col-2">예<input type="radio" name="noticeYn" value="Y" />
 									아니오<input type="radio" name="noticeYn" value="N" />
-								</td>
-							</tr>
-							<tr>
-								<td colspan="2">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-2">
 									<textarea name="contents" style="width: 550px; height: 400px"></textarea>
-								</td>
-							</tr>
-							<tr>
-								<td align="center" colspan="2">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-2"  colspan="2">
 									<input type="submit" value="등록" />
 									<input type="reset" value="다시 작성" />
-								</td>
-							</tr>
-						</table>
+								</div>
+							</div>
+						</div>
 						</form>
 					</div>
 				</div>
