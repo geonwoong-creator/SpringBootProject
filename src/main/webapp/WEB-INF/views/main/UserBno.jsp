@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@ page import="kopo.poly.dto.UserInfoDTO" %>
-<%@ page import="kopo.poly.util.CmmUtil" %>
 <%@ page import="kopo.poly.dto.BnoDTO" %>
-<% UserInfoDTO rDTO = (UserInfoDTO) request.getAttribute("rDTO");
-    BnoDTO pDTO = (BnoDTO) request.getAttribute("pDTO");
+<%@ page import="kopo.poly.util.CmmUtil" %>
+<%@ page import="kopo.poly.dto.UserInfoDTO" %>
+<% BnoDTO rDTO = (BnoDTO) request.getAttribute("rDTO");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -124,38 +123,42 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container">
-            <div class="row justify-content-center">
-            <div class="col-lg-5">
-           <div class="card-body" style="align-content: center">
-                   <div class="row" >
-                       <div class="col">
-                          아이디 <%=session.getAttribute("SS_USER_ID")%>님
-                       </div>
-                   </div>
-                   <div class="row">
-                       <div class="col">
-                           이름<%=CmmUtil.nvl(rDTO.getUser_name())%>님
-                       </div>
-                   </div>
-                   <div class="row">
-                       <div class="col">
-                           이메일<%=CmmUtil.nvl(rDTO.getEmail())%>님
-                       </div>
-                   </div>
-               <div class="row">
-                   <div class="col">
-                       사업자번호
-                   </div>
-                    <form name="f" method="post" action="/main/Bno">
-                        <div class="col-2"><input class="form-control" type="text" name="b_no" placeholder="사업자번호등록" maxlength="100" style="width: 450px" />
-                        <input type="submit" value="등록">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5">
+                        <div class="card-body" style="align-content: center">
+                            <div class="row" >
+                                <div class="col">
+                                    아이디 <%=session.getAttribute("SS_USER_ID")%>님
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col">
+                                    사업자 번호
+                                </div>
+                                <dic class="col">
+                                    <%=CmmUtil.nvl(rDTO.getB_no())%>
+                                </dic>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    납세자상태
+                                </div>
+                                <div class="col">
+                                    <%=CmmUtil.nvl(rDTO.getB_stt())%>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    과세유형메세지
+                                </div>
+                                <div class="col">
+                                    <%=CmmUtil.nvl(rDTO.getTax_type())%>
+                                </div>
+                            </div>
+
                         </div>
-                    </form>
-                   <a class="btn btn-success" href="/main/UserBno">사업자 정보 확인하기</a>
-               </div>
-           </div>
-             </div>
-            </div>
+                    </div>
+                </div>
             </div>
         </main>
         <footer class="py-4 bg-light mt-auto">

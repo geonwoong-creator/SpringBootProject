@@ -42,6 +42,8 @@ public class MainController {
             UserInfoDTO pDTO = new UserInfoDTO();
             pDTO.setUser_id(Userid);
 
+
+
             UserInfoDTO rDTO = mainService.getUserInfo(pDTO);
             String encEmail = rDTO.getEmail();
             String email = EncryptUtil.decAES128CBC(encEmail);
@@ -65,6 +67,7 @@ public class MainController {
 
         return "/main/UserSetting";
     }
+
 
 
 
