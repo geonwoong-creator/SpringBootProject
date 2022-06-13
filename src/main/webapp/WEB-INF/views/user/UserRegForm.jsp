@@ -115,6 +115,10 @@
                                                 <label for="addr2">address</label>
                                             </div>
                                         </div>
+                                        <div class="form-floating mb-3">
+                                            <input  id="inputUserrole" name="userrole" type="checkbox" value="관리자"  />
+                                            <label for="inputUserrole">관리자</label>
+                                        </div>
                                     </div>
                                     <div class="mt-4 mb-0">
                                         <div class="d-grid"><input type="submit" value="Register" /></div>

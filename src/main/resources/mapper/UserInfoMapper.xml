@@ -14,7 +14,8 @@
                 ADDR1,
                 ADDR2,
                 REG_ID,
-                CHG_ID
+                CHG_ID,
+                USER_ROLE
             )
         VALUES(
             #{user_id},
@@ -24,7 +25,8 @@
             #{addr1},
             #{addr2},
             #{user_id},
-            #{user_id}
+            #{user_id},
+            #{user_role}
             )
 
     </insert>
