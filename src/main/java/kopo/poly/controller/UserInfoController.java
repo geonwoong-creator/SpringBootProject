@@ -66,6 +66,7 @@ public class UserInfoController {
             String email = CmmUtil.nvl(request.getParameter("email")); //이메일
             String addr1 = CmmUtil.nvl(request.getParameter("addr1")); //주소
             String addr2 = CmmUtil.nvl(request.getParameter("addr2")); //상세주소
+            String userrole = CmmUtil.nvl(request.getParameter("userrole"));
             /*
              * #######################################################
              *        웹(회원정보 입력화면)에서 받는 정보를 String 변수에 저장 끝!!
@@ -86,6 +87,7 @@ public class UserInfoController {
             log.info("email : " + email);
             log.info("addr1 : " + addr1);
             log.info("addr2 : " + addr2);
+            log.info("user_role : "  + userrole);
 
 
             /*
@@ -102,6 +104,7 @@ public class UserInfoController {
 
             pDTO.setUser_id(user_id);
             pDTO.setUser_name(user_name);
+            pDTO.setUser_role(userrole);
 
             //비밀번호는 절대로 복호화되지 않도록 해시 알고리즘으로 암호화함
             pDTO.setPassword(EncryptUtil.encHashSHA256(password));

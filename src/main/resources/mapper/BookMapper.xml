@@ -21,4 +21,9 @@
         SELECT  *
         FROM BOOK WHERE USER_ID = #{user_id}
     </select>
+
+    <select id="getBookSeq" resultType="BookDTO">
+        SELECT  *
+        FROM BOOK WHERE USER_ID = #{user_id}
+    </select>
 </mapper>

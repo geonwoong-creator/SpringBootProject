@@ -1,88 +1,59 @@
+<%@ page import="kopo.poly.dto.ChatRoomDTO" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="kopo.poly.dto.BookDTO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
-
-<%@ page import="kopo.poly.dto.NoticeDTO" %>
-<%@ page import="kopo.poly.util.CmmUtil" %>
+         pageEncoding="UTF-8"%>
 <%
-    NoticeDTO rDTO = (NoticeDTO) request.getAttribute("rDTO");
+    List<ChatRoomDTO> cList = (List<ChatRoomDTO>) request.getAttribute("list");
 
-//공지글 정보를 못불러왔다면, 객체 생성
-    if (rDTO == null) {
-        rDTO = new NoticeDTO();
 
+    if(cList == null) {
+        cList = new ArrayList<>();
     }
-
-    String ss_user_id = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
-
-//본인이 작성한 글만 수정 가능하도록 하기(1:작성자 아님 / 2: 본인이 작성한 글 / 3: 로그인안함)
-    int edit = 1;
-
-//로그인 안했다면....
-    if (ss_user_id.equals("")) {
-        edit = 3;
-
-//본인이 작성한 글이면 2가 되도록 변경
-    } else if (ss_user_id.equals(CmmUtil.nvl(rDTO.getUser_id()))) {
-        edit = 2;
-
-    }
-
-    System.out.println("user_id : " + CmmUtil.nvl(rDTO.getUser_id()));
-    System.out.println("ss_user_id : " + ss_user_id);
-
 %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!--j쿼리 -->
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <%
+        if(session.getAttribute("SS_USER_ID") == null) { //로그인이 안되었을때
+            //로그인 화면으로 이동
+            response.sendRedirect("/user/loginForm");
+        } else {
+    %>
+    <script>
+        $(document).ready(function(){
+
+            var roomName = [[${roomName}]];
+
+            if(roomName != null)
+                alert(roomName + "방이 개설되었습니다.");
+
+            $("#createRoom").on("click", function (e){
+                e.preventDefault();
+
+                var name = $("input[name='name']").val();
+                console.log("roomName :"  + name);
+
+                if(name == "")
+                    alert("Please write the name.")
+                else
+                    $("#formAddRoom").submit();
+            });
+
+        });
+    </script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Tables - SB Admin</title>
+    <title>Dashboard - SB Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-        //수정하기
-        function doEdit() {
-            if ("<%=edit%>" == 2) {
-                location.href = "/notice/NoticeEditInfo?nSeq=<%=CmmUtil.nvl(rDTO.getNotice_seq())%>";
-
-            } else if ("<%=edit%>" == 3) {
-                alert("로그인 하시길 바랍니다.");
-
-            } else {
-                alert("본인이 작성한 글만 수정 가능합니다.");
-
-            }
-        }
-
-
-        //삭제하기
-        function doDelete() {
-            if ("<%=edit%>" == 2) {
-                if (confirm("작성한 글을 삭제하시겠습니까?")) {
-                    location.href = "/notice/NoticeDelete?nSeq=<%=CmmUtil.nvl(rDTO.getNotice_seq())%>";
-
-                }
-
-            } else if ("<%=edit%>" == 3) {
-                alert("로그인 하시길 바랍니다.");
-
-            } else {
-                alert("본인이 작성한 글만 삭제 가능합니다.");
-
-            }
-        }
-
-        //목록으로 이동
-        function doList() {
-            location.href = "/notice/NoticeList";
-
-        }
-
-    </script>
 </head>
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -102,7 +73,7 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#!">Settings</a></li>
+                <li><a class="dropdown-item" href="/main/UserSetting">Settings</a></li>
                 <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                 <li><hr class="dropdown-divider" /></li>
                 <li><a class="dropdown-item" href="/user/Logout">Logout</a></li>
@@ -116,7 +87,7 @@
             <div class="sb-sidenav-menu">
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading">Core</div>
-                    <a class="nav-link" href="/main/main">
+                    <a class="nav-link" href="index.html">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Dashboard
                     </a>
@@ -128,8 +99,8 @@
                     </a>
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                            <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                            <a class="nav-link" href="/product/ProductList">예약</a>
+                            <a class="nav-link" href="/product/BookResult">예약확인</a>
                         </nav>
                     </div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -182,75 +153,25 @@
     </div>
     <div id="layoutSidenav_content">
         <main>
-            <div class="container-fluid px-4">
-                <h1 class="mt-4">Tables</h1>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Tables</li>
-                </ol>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
-                        <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
-                        .
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-table me-1"></i>
-                        게시판
-                        <input type="button" onclick="noticeED()" value="글쓰기" />
-                    </div>
-                    <div class="card-body" style="text-align: center">
-
-
-                            <div class="row btn-light">
-                                <div class="col-2" align="center">제목</div>
-                                <div class="col-2"><%=CmmUtil.nvl(rDTO.getTitle())%>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-2" align="center">작성일</div>
-                                <div class="col-2"><%=CmmUtil.nvl(rDTO.getReg_dt())%>
-                                </div>
-                                <div class="col-2" align="center">조회수</div>
-                                <div class="col-2"><%=CmmUtil.nvl(rDTO.getRead_cnt())%>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-2" align="center">content</div>
-                                <div class="col-2"  height="300px" valign="top">
-                                    <%=CmmUtil.nvl(rDTO.getContents()).replaceAll("\r\n", "<br/>") %>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col" align="center" colspan="4">
-                                    <a href="javascript:doEdit();">[수정]</a>
-                                    <a href="javascript:doDelete();">[삭제]</a>
-                                    <a href="javascript:doList();">[목록]</a>
-                                </div>
-                            </div>
-                        <div class="container">
-                            <label for="content">comment</label>
-                            <form name="commentInsetForm">
-                                <div class="input-group">
-                                    <input type="hidden" id="notice_seq" value="<%=CmmUtil.nvl(rDTO.getNotice_seq())%>"/>
-                                    <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요.">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-outline-success" type="button" name="commentInsetBtn" onclick="commentInsert()">등록</button>
-                                    </span>
-                                </div>
-                            </form>
+                    <div class="container">
+                        <div>
+                            <%
+                                for(ChatRoomDTO cDTO : cList) {
+                                    String name = cDTO.getName();
+                                    String roomId = cDTO.getRoomid();
+                            %>
+                            <ul>
+                                <li><a href="/chat/room?roomId=<%= roomId%>"><%= name%></a></li>
+                            </ul>
+                            <%
+                                }
+                            %>
                         </div>
-                        <div class="container">
-                            <div id="commentList"></div>
-                        </div>
-
-<%@ include file="Comment.jsp"%>
                     </div>
-                </div>
-            </div>
+                    <form action="/chat/room" id="formAddRoom" method="post">
+                        <input type="text" name="name"  class="form-control">
+                        <button class="btn btn-secondary" id="createRoom">개설하기</button>
+                    </form>
         </main>
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">
@@ -268,7 +189,11 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="/js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="/assets/demo/chart-area-demo.js"></script>
+<script src="/assets/demo/chart-bar-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
 <script src="/js/datatables-simple-demo.js"></script>
+<%}%>
 </body>
 </html>

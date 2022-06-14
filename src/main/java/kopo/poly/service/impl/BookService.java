@@ -32,4 +32,11 @@ public class BookService  implements IBookService {
 
         return bookMapper.getBookInfo(pDTO);
     }
+
+    @Override
+    public BookDTO getBookSeq(BookDTO pDTO) throws Exception {
+        log.info(this.getClass().getName() + ".chatroom create!");
+
+        return bookMapper.getBookSeq(pDTO);
+    }
 }

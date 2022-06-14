@@ -5,6 +5,8 @@ import kopo.poly.dto.ProductDTO;
 import java.util.List;
 
 public interface IProductService {
+
+
     //상품 리스트
     List<ProductDTO> getProductList() throws Exception;
 

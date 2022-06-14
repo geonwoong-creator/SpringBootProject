@@ -24,6 +24,14 @@ public class MainController {
         log.info(".MainPage Start!");
     }
 
+//    @RequestMapping(value = "main/rooms")
+//    public String chatPageGET() {
+//        log.info(".MainPage Start!");
+//        return "/main/Rooms";
+//    }
+
+
+
     @RequestMapping(value = "/user/Logout")
     public void UserLogout() {
         log.info(".UserLogout");

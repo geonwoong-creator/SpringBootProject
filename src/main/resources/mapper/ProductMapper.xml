@@ -6,7 +6,7 @@
 
     <!-- 게시판 리스트 쿼리 -->
     <select id="getProductList" resultType="ProductDTO">
-        SELECT N.PRODUCT_SEQ, N.PRODUCT_NAME, N.ADDR, N.READ_CNT, N.USER_ID,
+        SELECT N.PRODUCT_SEQ, N.PRODUCT_NAME, N.ADDR, N.READ_CNT, N.USER_ID, N.FILEURL,
                DATE_FORMAT(N.REG_DT, '%Y-%m-%d') AS REG_DT
         FROM PRODUCT N
         ORDER BY N.PRODUCT_SEQ DESC

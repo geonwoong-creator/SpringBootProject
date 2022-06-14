@@ -9,4 +9,6 @@ public interface IBookMapper {
     void InsertBook(BookDTO pDTO) throws Exception;
 
     BookDTO getBookInfo(BookDTO pDTO) throws Exception;
+
+    BookDTO getBookSeq(BookDTO pDTO) throws Exception;
 }

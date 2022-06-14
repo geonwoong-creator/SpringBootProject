@@ -3,11 +3,15 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="kopo.poly.dto.ProductDTO" %>
+<%@ page import="kopo.poly.dto.UserInfoDTO" %>
 <%@ page import="kopo.poly.util.CmmUtil" %>
 <%
     session.getAttribute("SS_USER_ID"); //세션 강제 적용, 로그인된 상태로 보여주기 위함
 
     List<ProductDTO> rList = (List<ProductDTO>) request.getAttribute("rList");
+
+
+
 
 //게시판 조회 결과 보여주기
     if (rList == null) {
@@ -37,6 +41,7 @@
         function noticeED() { //게시판 글쓰기
             location.href = "/product/ProductReg"
         }
+
     </script>
 </head>
 <body class="sb-nav-fixed">
@@ -138,33 +143,18 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Tables</h1>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Tables</li>
-                </ol>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
-                        <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
-                        .
-                    </div>
-                </div>
+                <h1 class="mt-4">예약</h1>
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>
-                        게시판
-                        <input type="button" onclick="noticeED()" value="글쓰기" />
+                        상품
+
+                        <input type="button" onclick="noticeED()" value="상품등록하기" />
+
                     </div>
                     <div class="card-body">
-                        <div class="card-body" style="text-align: center">
-                            <div class="row btn-light">
-                                <div class="col-2 btn-light">순번</div>
-                                <div class="col-4 btn-danger">제목</div>
-                                <div class="col-2 btn-primary">조회수</div>
-                                <div class="col-2 btn-warning">등록자</div>
-                                <div class="col-2 btn-success">등록일</div>
-                            </div>
+                        <div class="container">
+                            <div class="row">
                             <%
                                 for (int i = 0; i < rList.size(); i++) {
                                     ProductDTO rDTO = rList.get(i);
@@ -174,25 +164,21 @@
                                     }
 
                             %>
-                            <div class="row">
-                                <div class="col-2">
-                                    <%=CmmUtil.nvl(rDTO.getProduct_seq())%>
-                                </div>
-                                <div class="col-4">
-                                    <a href="javascript:doDetail('<%=CmmUtil.nvl(rDTO.getProduct_seq())%>');">
-                                        <%=CmmUtil.nvl(rDTO.getProduct_name()) %>
-                                    </a>
-                                </div>
-                                <div class="col-2"><%=CmmUtil.nvl(rDTO.getRead_cnt()) %>
-                                </div>
-                                <div class="col-2"><%=CmmUtil.nvl(rDTO.getUser_id()) %>
-                                </div>
-                                <div class="col-2"><%=CmmUtil.nvl(rDTO.getReg_dt()) %>
+                        <div class="col-xl-4 col-md-6">
+                            <div class="card bg-white text-black mb-4">
+                                <div class="card-header"><%=CmmUtil.nvl(rDTO.getProduct_name()) %></div>
+                                <div class="card-body"><img class="img-fluid" src="<%=CmmUtil.nvl(rDTO.getFileurl())%>" /></div>
+                                <div class="card-footer"><a class="small text-black"> 판매자 <%=CmmUtil.nvl(rDTO.getUser_id()) %></a></div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-black stretched-link" href="javascript:doDetail('<%=CmmUtil.nvl(rDTO.getProduct_seq())%>');">상세 보기</a>
+                                    <div class="small text-black"><svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M64 448c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L178.8 256L41.38 118.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25l-160 160C80.38 444.9 72.19 448 64 448z"></path></svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
                                 </div>
                             </div>
+                        </div>
                             <%
                                 }
                             %>
+                            </div>
                         </div>
                     </div>
                 </div>
