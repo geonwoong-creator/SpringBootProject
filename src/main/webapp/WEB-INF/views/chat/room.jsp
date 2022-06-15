@@ -32,6 +32,30 @@
         } else {
     %>
     <script>
+        //채팅방 전체 대화 가져오기
+        function getAllMsg() {
+
+
+        }
+
+        // 대화 메시지 전체 출력하기
+        function doOutputMsg(json) {
+
+            // 메시지 대화가 존재하면 출력
+            if (json != null) {
+
+                let totalMsg = "";
+
+                for (let i = 0; i < json.length; i++) {
+                    totalMsg += (json[i].message + " | " + json[i].user_id + " | " + json[i].roomid + "<br/>");
+                }
+
+                // 채팅방마다 한줄씩 추가
+                $("#total_msg").html(totalMsg);
+            }
+        }
+    </script>
+    <script>
 
         $(document).ready(function(){
 
@@ -206,6 +230,7 @@
                                     <input type="text" id="msg" class="form-control">
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
+                                        <button class="btn btn-outline-success" type="button" value="<%=CmmUtil.nvl(cDTO.getRoomid())%>" onclick="getAllMsg()">불러오기</button>
                                     </div>
                                 </div>
                             </div>

@@ -16,18 +16,18 @@
     <insert id="insertProduct" parameterType="ProductDTO">
         INSERT INTO PRODUCT
         (
-             PRODUCT_NAME, ADDR, CONTENTS, FILENAME, FILEORINAME, FILEURL, USER_ID, READ_CNT,
+             PRODUCT_NAME, ADDR, MCOED, CONTENTS, FILENAME, FILEORINAME, FILEURL, USER_ID, READ_CNT,
             REG_ID, REG_DT, CHG_ID, CHG_DT
         )
         VALUES(
 
-                      #{product_name}, #{addr}, #{contents}, #{filename}, #{fileoriname}, #{fileurl}, #{user_id}, 0, #{user_id}, SYSDATE(), #{user_id}, SYSDATE()
+                      #{product_name}, #{addr}, #{mcoed}, #{contents}, #{filename}, #{fileoriname}, #{fileurl}, #{user_id}, 0, #{user_id}, SYSDATE(), #{user_id}, SYSDATE()
               )
     </insert>
 
     <!-- 게시판 상세보기 쿼리 -->
     <select id="getProduct" resultType="ProductDTO">
-        SELECT N.PRODUCT_SEQ, N.PRODUCT_NAME, N.ADDR, N.FILENAME, N.FILEURL, N.READ_CNT, U.USER_NAME, N.USER_ID,
+        SELECT N.PRODUCT_SEQ, N.PRODUCT_NAME, N.ADDR, N.MCOED, N.FILENAME, N.FILEURL, N.READ_CNT, U.USER_NAME, N.USER_ID,
                N.CONTENTS, DATE_FORMAT(N.REG_DT, '%Y-%m-%d') AS REG_DT
         FROM PRODUCT N, USER_INFO U
         WHERE N.USER_ID = U.USER_ID

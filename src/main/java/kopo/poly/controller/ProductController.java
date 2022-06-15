@@ -1,6 +1,8 @@
 package kopo.poly.controller;
 
+import kopo.poly.dto.MapDTO;
 import kopo.poly.dto.ProductDTO;
+import kopo.poly.service.IMapService;
 import kopo.poly.service.IProductService;
 import kopo.poly.service.IS3Service;
 import kopo.poly.util.CmmUtil;
@@ -41,6 +43,9 @@ public class ProductController {
     private IProductService productService;
     @Resource(name = "S3Service")
     private  IS3Service s3Service;
+
+    @Resource(name = "MapService")
+    private IMapService mapService;
 
     /**
      * 게시판 리스트 보여주기
@@ -87,11 +92,28 @@ public class ProductController {
      * GetMapping(value = "notice/NoticeReg") =>  GET방식을 통해 접속되는 URL이 notice/NoticeReg인 경우 아래 함수를 실행함
      */
     @GetMapping(value = "product/ProductReg")
-    public String ProductReg() {
+    public String ProductReg(ModelMap model) {
 
         log.info(this.getClass().getName() + ".ProductReg start!");
 
         log.info(this.getClass().getName() + ".ProductReg end!");
+        //행정번호
+        log.info(this.getClass().getName() + ".getMapInfo start");
+
+        try {
+            MapDTO pDTO = new MapDTO();
+
+            List<MapDTO> rList = mapService.getMapInfo(pDTO);
+
+            model.addAttribute("rList", rList);
+        }catch (Exception e) {
+            log.info(e.toString());
+            e.printStackTrace();
+        }finally {
+            log.info(this.getClass().getName() + ".getMapinfo End!");
+        }
+
+        log.info(this.getClass().getName() + ".getMapinfo End");
 
         return "/product/ProductReg";
     }
@@ -106,13 +128,16 @@ public class ProductController {
 
         String msg = "";
 
+
+
         try {
             /*
              * 게시판 글 등록되기 위해 사용되는 form객체의 하위 input 객체 등을 받아오기 위해 사용함
              */
             String user_id = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
             String product_name = CmmUtil.nvl(request.getParameter("product_name")); // 제목
-            String addr = CmmUtil.nvl(request.getParameter("addr")); // 공지글 여부
+            String addr = CmmUtil.nvl(request.getParameter("addr"));
+            String mCome = CmmUtil.nvl(request.getParameter("mCome"));// 공지글 여부
             String contents = CmmUtil.nvl(request.getParameter("contents")); // 내용
             String filename = files.getOriginalFilename();
             String filenameExtension = FilenameUtils.getExtension(filename).toLowerCase();
@@ -144,6 +169,7 @@ public class ProductController {
             pDTO.setUser_id(user_id);
             pDTO.setProduct_name(product_name);
             pDTO.setAddr(addr);
+            pDTO.setMcoed(mCome);
             pDTO.setContents(contents);
             pDTO.setFilename(destinationFileName);
             pDTO.setFileoriname(filename);

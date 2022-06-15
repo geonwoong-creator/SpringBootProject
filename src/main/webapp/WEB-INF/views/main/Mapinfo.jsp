@@ -1,7 +1,17 @@
+<%@ page import="kopo.poly.util.CmmUtil" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="kopo.poly.dto.MapDTO" %>
 <%@ page import="kopo.poly.dto.BookDTO" %>
-<%@ page import="kopo.poly.util.CmmUtil" %>
+<%
+    List<MapDTO> pList = (List<MapDTO>) request.getAttribute("rList");
+    if(pList == null) {
+        pList = new ArrayList<>();
+    }
+%>
 <% BookDTO rDTO = (BookDTO) request.getAttribute("rDTO");
 %>
 <!DOCTYPE html>
@@ -18,10 +28,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>예약확인</title>
+    <title>동일업종조회</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+
+    <!--j쿼리 -->
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+        function callApi() {
+            console.log($("#mSelect").val());
+            console.log($("#sSelect").val());
+
+            <!--가게 조회-->
+        }
+        function MaketlList() {
+            let mCome = document.getElementById("mCome").value;
+
+
+            $.ajax({
+                type : "get",
+                url : "/Mapinfo",
+                dataType : "json",
+                data : {
+                    "mCome" : mCome
+                },
+                contentType: 'application/json',
+                success : function(result) {
+                    console.log(result);
+                    console.log(result[0]);
+                    $("#maSelect").empty();
+                    for (let i = 0; i < result.length; i++)
+                    {
+                        let Mcode = result[i].mainTrarNm;
+                        let Mname = result[i].signguNm;
+
+
+                        let color = ["bg-primary", "bg-success", "bg-warning", "bg-danger"];
+                        let randomNum = Math.floor(Math.random() * 4);
+                        let seletedColor = color[randomNum];
+                        $("#maSelect").append($(
+                            `<div class="col-xl-3 col-md-6">
+                                <div class="card \${seletedColor} text-white mb-4" name="twingkle">
+                                    <div class="card-body">\${Mname} \${Mcode}</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <div class="small text-white"><svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M64 448c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L178.8 256L41.38 118.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25l-160 160C80.38 444.9 72.19 448 64 448z"></path></svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
+                                    </div>
+                                </div>
+                            </div>`
+                        ));
+                    }
+                },
+                error : function(req, status, error) {
+                    console.log(error);
+                },
+                complete : function(){
+                    console.log("ajax끝");
+                }
+            });
+        }
+
+        function callApi() {
+            console.log($("#mSelect").val());
+            console.log($("#sSelect").val());
+            console.log($("#maSelect").val());
+
+
+        }
+
+        function chgColor() {
+            $("div[name=twingkle]").each(function(index, item){
+                let color = ["bg-primary", "bg-success", "bg-warning", "bg-danger"];
+                let randomNum = Math.floor(Math.random() * 4);
+                let seletedColor = color[randomNum];
+                $(item).attr('class','card ' + seletedColor + ' text-white mb-4');
+            });
+        }
+        window.onload = function () {
+
+            setInterval(function() {
+                chgColor();
+            }, 1000);
+        }
+    </script>
 </head>
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -97,23 +186,29 @@
     </div>
     <div id="layoutSidenav_content">
         <main>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col">장소 이름</div>
-                    <div class="col"><%=CmmUtil.nvl(rDTO.getProduct_name())%></div>
-                </div>
-                <div class="row">
-                    <div class="col">장소 주소</div>
-                    <div class="col"><%=CmmUtil.nvl(rDTO.getProduct_addr())%></div>
-                </div>
-                <div class="row">
-                    <div class="col">셀러</div>
-                    <div class="col"><%=CmmUtil.nvl(rDTO.getSeller())%></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="card-body" style="align-content: center">
+                            <form class="form">
+                               <button type="button" id="mCome" value="<%=CmmUtil.nvl(rDTO.getProduct_mcoed())%>" onclick="MaketlList()">주변상권조회하기</button>
+                            </form>
+
+                            <button class="btn btn-outline-success" type="button" onclick="callApi()">호출</button>
+                            <div class="container">
+                                <div class="row" id="maSelect">
+                                    <div class="col-xl-3 col-md-6">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!--   <select class="form-select" id="maSelect">
+                               </select> -->
+
+                        </div>
+                    </div>
                 </div>
             </div>
-            <form action="/main/Mapinfo" name="mCome">
-                <button type="submit" value="<%=CmmUtil.nvl(rDTO.getProduct_mcoed())%>">주변상권조회</button>
-            </form>
         </main>
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">
@@ -136,6 +231,7 @@
 <script src="/assets/demo/chart-bar-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
 <script src="/js/datatables-simple-demo.js"></script>
+
 <%}%>
 </body>
 </html>

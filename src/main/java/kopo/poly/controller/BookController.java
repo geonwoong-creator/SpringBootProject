@@ -32,11 +32,12 @@ public class BookController {
             String seller = CmmUtil.nvl(request.getParameter("seller"));
             String product_name = CmmUtil.nvl(request.getParameter("product_name"));
             String product_addr = CmmUtil.nvl(request.getParameter("product_addr"));
-
+            String product_mcoed = CmmUtil.nvl(request.getParameter("product_mcoed"));
             log.info("user_id : " + user_id);
             log.info("seller : " + seller);
             log.info("product_name : " + product_name);
             log.info("product_addr : " + product_addr);
+            log.info("product_mcoed : " + product_mcoed);
 
 
             BookDTO pDTO = new BookDTO();
@@ -44,7 +45,7 @@ public class BookController {
             pDTO.setSeller(seller);
             pDTO.setProduct_name(product_name);
             pDTO.setProduct_addr(product_addr);
-
+            pDTO.setProduct_mcoed(product_mcoed);
             bookService.InsertBook(pDTO);
 
             msg = "예약되었습니다.";

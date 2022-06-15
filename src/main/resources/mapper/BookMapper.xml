@@ -8,12 +8,12 @@
     <insert id="InsertBook" parameterType="BookDTO">
         INSERT INTO BOOK
         (
-             PRODUCT_NAME, PRODUCT_ADDR, SELLER, USER_ID,
+             PRODUCT_NAME, PRODUCT_ADDR, SELLER, USER_ID, PRODUCT_MCOED,
              REG_DT
         )
         VALUES(
 
-                      #{product_name}, #{product_addr}, #{seller}, #{user_id}, SYSDATE()
+                      #{product_name}, #{product_addr}, #{seller}, #{user_id}, #{product_mcoed}, SYSDATE()
               )
     </insert>
 

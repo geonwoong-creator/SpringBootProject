@@ -1,23 +1,24 @@
 package kopo.poly.controller;
 
 import kopo.poly.dto.BookDTO;
+import kopo.poly.dto.ChatMesssageDTO;
 import kopo.poly.persistance.redis.impl.ChatRoomRepository;
 import kopo.poly.service.IBookService;
+import kopo.poly.service.IChatRedisService;
 import kopo.poly.util.CmmUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,12 +31,20 @@ public class RoomController {
     @Resource(name = "BookService")
     private IBookService bookService;
 
+    @Resource(name = "ChatRedisService")
+    private IChatRedisService chatRedisService;
+
     //채팅방 목록 조회
     @GetMapping(value = "/rooms")
     public String rooms(ModelMap model, HttpSession session) {
 
         log.info(this.getClass().getName() + ".getChatRoomList");
         String Userid = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
+
+
+
+        model.addAttribute("list", repository.findAllRooms());
+
 
      //   model.addAttribute("list", repository.findAllRooms());
         //UserId 로 maria Book db seller  userid  return list<bookDTO>
@@ -77,4 +86,34 @@ public class RoomController {
 
         return "/chat/room";
     }
+    @PostMapping(value = "/chat/room")
+    @ResponseBody
+    public List<ChatMesssageDTO> getMsg(HttpSession session, HttpServletRequest request)
+            throws Exception {
+
+        log.info(this.getClass().getName() + ".getMsg Start!");
+
+        String room_name = CmmUtil.nvl(request.getParameter("roomId"));
+
+        log.info("room_name : " + room_name);
+
+        ChatMesssageDTO cDTO = new ChatMesssageDTO();
+
+//        cDTO.setRoomid("Chat_" + room_name);
+        cDTO.setRoomid(room_name);
+
+        List<ChatMesssageDTO> rList = chatRedisService.getChat(cDTO);
+
+        if (rList == null) {
+            rList = new ArrayList<>();
+
+        }
+
+        cDTO = null;
+
+        log.info(this.getClass().getName() + ".getMsg End!");
+
+        return rList;
+    }
+
 }
