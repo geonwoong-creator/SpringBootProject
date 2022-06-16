@@ -2,6 +2,8 @@ package kopo.poly.controller;
 
 import kopo.poly.dto.MapDTO;
 import kopo.poly.dto.ProductDTO;
+import kopo.poly.dto.UserInfoDTO;
+import kopo.poly.service.IMainService;
 import kopo.poly.service.IMapService;
 import kopo.poly.service.IProductService;
 import kopo.poly.service.IS3Service;
@@ -47,14 +49,27 @@ public class ProductController {
     @Resource(name = "MapService")
     private IMapService mapService;
 
+    @Resource(name = "MainService")
+    private IMainService mainService;
+
     /**
      * 게시판 리스트 보여주기
      *
      * GetMapping(value = "notice/NoticeList") =>  GET방식을 통해 접속되는 URL이 notice/NoticeList인 경우 아래 함수를 실행함
      */
     @GetMapping(value = "product/ProductList")
-    public String ProductList(ModelMap model)
+    public String ProductList(ModelMap model, HttpSession session)
             throws Exception {
+
+        String Userid = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
+
+        UserInfoDTO pDTO = new UserInfoDTO();
+        pDTO.setUser_id(Userid);
+
+        UserInfoDTO uDTO = mainService.getUserInfo(pDTO);
+
+
+        model.addAttribute("uDTO", uDTO);
 
         // 로그 찍기(추후 찍은 로그를 통해 이 함수에 접근했는지 파악하기 용이하다.)
         log.info(this.getClass().getName() + ".ProductList start!");

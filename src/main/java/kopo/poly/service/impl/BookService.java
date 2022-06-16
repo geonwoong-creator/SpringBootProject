@@ -3,6 +3,7 @@ package kopo.poly.service.impl;
 import kopo.poly.dto.BookDTO;
 import kopo.poly.persistance.mapper.IBookMapper;
 import kopo.poly.service.IBookService;
+import kopo.poly.util.CmmUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,18 @@ public class BookService  implements IBookService {
 
         log.info(this.getClass().getName() + ".InsertBook start!");
 
-        bookMapper.InsertBook(pDTO);
+        BookDTO rDTO = bookMapper.getUserExists(pDTO);
+
+        if (rDTO == null) {
+            rDTO = new BookDTO();
+        }
+
+        if (CmmUtil.nvl(rDTO.getExists_yn()).equals("Y")) {
+            throw new RuntimeException("msg");
+        } else {
+
+            bookMapper.InsertBook(pDTO);
+        }
     }
 
     @Override

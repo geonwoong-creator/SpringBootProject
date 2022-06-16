@@ -13,6 +13,10 @@
     }
 %>
 <% BookDTO rDTO = (BookDTO) request.getAttribute("rDTO");
+
+if (rDTO == null) {
+    rDTO = new BookDTO();
+}
 %>
 <!DOCTYPE html>
 <html lang="en">

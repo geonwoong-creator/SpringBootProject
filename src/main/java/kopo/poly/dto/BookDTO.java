@@ -12,4 +12,7 @@ public class BookDTO {
     private String seller;
     private String user_id;
     private String reg_dt;
+
+
+    private String exists_yn;
 }

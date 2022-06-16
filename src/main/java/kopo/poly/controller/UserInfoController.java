@@ -7,9 +7,7 @@ import kopo.poly.util.EncryptUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -469,6 +467,17 @@ public class UserInfoController {
         }
 
         return "/user/PasswordToMsg";
+    }
+
+    @PostMapping("/user/idCheck")
+    @ResponseBody
+    public int idCheck(@RequestParam("user_id")String user_id) throws Exception{
+        log.info(this.getClass().getName() + ".user_idCheck start!");
+        log.info("전달받은 user_id : " + user_id);
+        int cnt = userInfoService.idCheck(user_id);
+        log.info("결과 : " + cnt);
+
+        return cnt;
     }
 
 

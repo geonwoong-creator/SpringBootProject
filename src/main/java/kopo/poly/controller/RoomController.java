@@ -36,8 +36,9 @@ public class RoomController {
 
     //채팅방 목록 조회
     @GetMapping(value = "/rooms")
-    public String rooms(ModelMap model, HttpSession session) {
+    public String rooms(ModelMap model, HttpSession session) throws Exception{
 
+        log.info(this.getClass().getName() + ".getChatRoomList");
         log.info(this.getClass().getName() + ".getChatRoomList");
         String Userid = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
 
@@ -85,8 +86,7 @@ public class RoomController {
 
 
         return "/chat/room";
-    }
-    @PostMapping(value = "/chat/room")
+    }@GetMapping(value = "/chat/room")
     @ResponseBody
     public List<ChatMesssageDTO> getMsg(HttpSession session, HttpServletRequest request)
             throws Exception {

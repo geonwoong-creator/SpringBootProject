@@ -26,4 +26,11 @@
         SELECT  *
         FROM BOOK WHERE USER_ID = #{user_id}
     </select>
+
+    <select id="getUserExists" parameterType="BookDTO" resultType="BookDTO">
+        SELECT CASE WHEN COUNT(*) = 1 THEN 'Y' ELSE 'N' END AS EXISTS_YN
+        FROM BOOK
+        WHERE USER_ID = #{user_id}
+    </select>
+
 </mapper>

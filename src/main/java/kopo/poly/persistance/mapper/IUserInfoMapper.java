@@ -20,4 +20,6 @@ public interface IUserInfoMapper {
 
     //비밀번호 변경
     void updatePassword(UserInfoDTO pDTO) throws Exception;
+
+    int idCheck(String user_id) throws Exception;
 }

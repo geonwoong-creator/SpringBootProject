@@ -10,7 +10,14 @@
 
     List<ProductDTO> rList = (List<ProductDTO>) request.getAttribute("rList");
 
-
+    UserInfoDTO uDTO = (UserInfoDTO) request.getAttribute("uDTO");
+    if(uDTO == null) {
+        uDTO = new UserInfoDTO();
+    }
+    String userRole = uDTO.getUser_role();
+    if(userRole == null) {
+        userRole = "";
+    }
 
 
 //게시판 조회 결과 보여주기
@@ -124,8 +131,13 @@
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>
                         상품
-
+                        <%
+                            if(!userRole.equals("")) {
+                        %>
                         <input type="button" onclick="noticeED()" value="상품등록하기" />
+                        <%
+                            }
+                        %>
 
                     </div>
                     <div class="card-body">

@@ -251,4 +251,11 @@ public class UserInfoService implements IUserInfoService {
 
         userInfoMapper.updatePassword(pDTO);
     }
+
+    @Override
+    public int idCheck(String user_id) throws Exception {
+        int cnt = userInfoMapper.idCheck(user_id);
+
+        return cnt;
+    }
 }

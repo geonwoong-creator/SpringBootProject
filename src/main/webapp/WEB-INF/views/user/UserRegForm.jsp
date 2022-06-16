@@ -3,13 +3,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!--j쿼리 -->
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
     <script type="text/javascript">
         //회원가입 정보의 유효성 체크하기
         function doRegUserCheck(f){
 
             if (f.user_id.value==""){
                 alert("아이디를 입력하세요.");
-                f.user_id.focus();
+                f.user_id.focus() ;
                 return false;
             }
 
@@ -50,6 +53,34 @@
             }
         }
     </script>
+    <script>
+        //아이디 중복 검사
+        function checkId() {
+            var id = $('#inputFirstName').val();
+            $.ajax({
+                url:'/user/idCheck',
+                type:'post',
+                data:{user_id : id},
+                success:function (cnt) {
+                    if (cnt != 1) {
+                        $('.id_input_re_1').css("display","inline-block");
+                        $('.id_input_re_2').css("display","none");
+                    }else {
+                        $('.id_input_re_1').css("display","none");
+                        $('.id_input_re_2').css("display","inline-block");
+                    }
+                    console.log("성공");
+                },
+                error:function (){
+                    alert("에러입니다")
+                }
+            });
+        };
+    </script>
+    <style>
+        .id_input_re_1{color: green; display: none;}
+        .id_input_re_2{color: red; display: none;}
+    </style>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -73,8 +104,12 @@
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <div class="form-floating mb-3 mb-md-0">
-                                                <input class="form-control" id="inputFirstName" name="user_id" type="text" placeholder="Enter your ID" />
+                                                <input class="form-control" id="inputFirstName" name="user_id" type="text" placeholder="Enter your ID" required oninput="checkId()" />
                                                 <label for="inputFirstName">ID</label>
+                                            </div>
+                                            <div class="row mb-3">
+                                            <span class="id_input_re_1" >사용 가능한 아이디 입니다.</span>
+                                            <span class="id_input_re_2" >아이디가 이미 존재합니다.</span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -115,9 +150,9 @@
                                                 <label for="addr2">address</label>
                                             </div>
                                         </div>
-                                        <div class="form-floating mb-3">
-                                            <input  id="inputUserrole" name="userrole" type="checkbox" value="관리자"  />
-                                            <label for="inputUserrole">관리자</label>
+                                        <div class="form-select-button mb-3">
+                                            <label for="inputUserrole">관리자로 가입하기</label>
+                                            <input  class="form-check " id="inputUserrole" name="userrole" type="checkbox" value="관리자"  />
                                         </div>
                                     </div>
                                     <div class="mt-4 mb-0">

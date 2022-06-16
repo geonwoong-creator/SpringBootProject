@@ -36,7 +36,7 @@ public class ChatRedisMapper implements IChatRedisMapper {
 
         redisDB.setValueSerializer(new Jackson2JsonRedisSerializer<>(ChatMesssageDTO.class));
 
-        redisDB.opsForList().leftPush(roomKey, cDTO);
+        redisDB.opsForList().rightPush(roomKey, cDTO);
 
         res = 1;
 

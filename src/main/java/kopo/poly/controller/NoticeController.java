@@ -94,6 +94,7 @@ public class NoticeController {
 
         String msg = "";
 
+
         try {
             /*
              * 게시판 글 등록되기 위해 사용되는 form객체의 하위 input 객체 등을 받아오기 위해 사용함

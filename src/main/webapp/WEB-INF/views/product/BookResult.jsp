@@ -3,6 +3,10 @@
 <%@ page import="kopo.poly.dto.BookDTO" %>
 <%@ page import="kopo.poly.util.CmmUtil" %>
 <% BookDTO rDTO = (BookDTO) request.getAttribute("rDTO");
+
+if (rDTO == null) {
+    rDTO = new BookDTO();
+}
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -98,22 +102,44 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="card-body">
-                <div class="row">
-                    <div class="col">장소 이름</div>
-                    <div class="col"><%=CmmUtil.nvl(rDTO.getProduct_name())%></div>
-                </div>
-                <div class="row">
-                    <div class="col">장소 주소</div>
-                    <div class="col"><%=CmmUtil.nvl(rDTO.getProduct_addr())%></div>
-                </div>
-                <div class="row">
-                    <div class="col">셀러</div>
-                    <div class="col"><%=CmmUtil.nvl(rDTO.getSeller())%></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-7">
+                        <div class="card shadow-lg border-0 rounded-lg mt-5">
+                            <div class="card-header">
+                                <h3>예약정보</h3>
+                            </div>
+                            <div class="card-body">
+                                <h5>장소이름</h5>
+                                <div class="form-control mb-3">
+                                    <div class="text-black" id="productname">
+                                        <label for="productname"><%=CmmUtil.nvl(rDTO.getProduct_name())%></label>
+                                    </div>
+                                </div>
+                                <h5>장소주소</h5>
+                                <div class="form-control mb-3">
+                                    <div class="text-black" id="productaddr">
+                                        <label for="productaddr"><%=CmmUtil.nvl(rDTO.getProduct_addr())%></label>
+                                    </div>
+                                </div>
+                                <h5>판매자 이름</h5>
+                                <div class="form-control mb-3">
+                                    <div class="text-black" id="seller">
+                                        <label for="seller"><%=CmmUtil.nvl(rDTO.getSeller())%></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <form action="/main/Mapinfo" name="mCome">
+                                    <button type="submit" value="<%=CmmUtil.nvl(rDTO.getProduct_mcoed())%>">주변상권조회</button>
+                                </form>
+                                <a class="button-bar" href="/chat/rooms">상담채팅</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <form action="/main/Mapinfo" name="mCome">
-                <button type="submit" value="<%=CmmUtil.nvl(rDTO.getProduct_mcoed())%>">주변상권조회</button>
-            </form>
+            </div>
         </main>
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">

@@ -24,8 +24,8 @@ public class ChatRedisService implements IChatRedisService {
 
         if (chatRedisMapper.saveRedisStringJSON(cDTO) == 1) {
             log.info("chatMapper.insert start");
-
-            chatRedisMapper.setTimeOutMinute(CmmUtil.nvl(cDTO.getRoomid()), 5);
+            String roomName = cDTO.getUser_id() + cDTO.getRoomid();
+            chatRedisMapper.setTimeOutMinute(CmmUtil.nvl(roomName), 5);
         } else {
             log.info("fail");
         }

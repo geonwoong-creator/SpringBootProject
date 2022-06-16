@@ -19,6 +19,28 @@
     <link href="/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 </head>
+<script>
+    var index = 0;
+    window.onload = function () {
+        slideShow();
+    }
+
+    function slideShow() {
+        var i;
+
+        var x = document.getElementsByClassName("slide1");
+
+        for (i = 0; i<x.length; i++) {
+            x[i].style.display = "none";
+        }
+        index++;
+        if (index > x.length) {
+            index = 1;
+        }
+        x[index-1].style.display = "block";
+        setTimeout(slideShow, 4000);
+    }
+</script>
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
@@ -77,17 +99,6 @@
                                     <a class="nav-link" href="/main/Food">동일업종조회</a>
                                 </nav>
                             </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                Error
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="401.html">401 Page</a>
-                                    <a class="nav-link" href="404.html">404 Page</a>
-                                    <a class="nav-link" href="500.html">500 Page</a>
-                                </nav>
-                            </div>
                         </nav>
                     </div>
                     <div class="sb-sidenav-menu-heading">자유게시판</div>
@@ -105,10 +116,12 @@
     </div>
     <div id="layoutSidenav_content">
         <main>
-            <div class="container-fluid px-4">
-
-
-            </div>
+            <h5 style="font-size: 60px;">COQUAT</h5>
+                <div>
+                    <img class="slide1" src="/images/1.png" style="height: 70%; width: 50%">
+                    <img class="slide1" src="/images/2.png" style="height: 70%; width: 50%">
+                    <img class="slide1" src="/images/3.png" style="height: 70%; width: 50%">
+                </div>
         </main>
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">

@@ -11,4 +11,6 @@ public interface IBookMapper {
     BookDTO getBookInfo(BookDTO pDTO) throws Exception;
 
     BookDTO getBookSeq(BookDTO pDTO) throws Exception;
+
+    BookDTO getUserExists(BookDTO pDTO) throws Exception;
 }
