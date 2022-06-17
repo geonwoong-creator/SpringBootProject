@@ -156,6 +156,7 @@
                             <div class="card bg-white text-black mb-4">
                                 <div class="card-header"><%=CmmUtil.nvl(rDTO.getProduct_name()) %></div>
                                 <div class="card-body"><img class="img-fluid" src="<%=CmmUtil.nvl(rDTO.getFileurl())%>" /></div>
+                                <div class="card-footer"><a class="text-black">가격 <%=CmmUtil.nvl((rDTO.getPrice()))%>\</a></div>
                                 <div class="card-footer"><a class="small text-black"> 판매자 <%=CmmUtil.nvl(rDTO.getUser_id()) %></a></div>
                                 <div class="card-footer"><a class="small text-black"> 조회수 <%=CmmUtil.nvl(rDTO.getRead_cnt())%></a></div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">

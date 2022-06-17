@@ -2,9 +2,12 @@ package kopo.poly.controller;
 
 import kopo.poly.dto.BookDTO;
 import kopo.poly.dto.ChatMesssageDTO;
+import kopo.poly.dto.ChatRoomDTO;
+import kopo.poly.dto.UserInfoDTO;
 import kopo.poly.persistance.redis.impl.ChatRoomRepository;
 import kopo.poly.service.IBookService;
 import kopo.poly.service.IChatRedisService;
+import kopo.poly.service.IMainService;
 import kopo.poly.util.CmmUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +31,9 @@ public class RoomController {
 
     private final ChatRoomRepository repository;
 
+    @Resource(name = "MainService")
+    private IMainService mainService;
+
     @Resource(name = "BookService")
     private IBookService bookService;
 
@@ -36,16 +42,35 @@ public class RoomController {
 
     //채팅방 목록 조회
     @GetMapping(value = "/rooms")
-    public String rooms(ModelMap model, HttpSession session) throws Exception{
+    public String rooms(ModelMap model, HttpSession session, RedirectAttributes rttr) throws Exception{
 
         log.info(this.getClass().getName() + ".getChatRoomList");
         log.info(this.getClass().getName() + ".getChatRoomList");
         String Userid = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
+        UserInfoDTO uDTO = new UserInfoDTO();
+        uDTO.setUser_id(Userid);
 
+        uDTO = mainService.getUserInfo(uDTO);
 
+        String userRole = uDTO.getUser_role();
+        if(userRole != null) {
+            model.addAttribute("list", repository.findAllRooms());
+            return "/chat/rooms";
 
-        model.addAttribute("list", repository.findAllRooms());
+        } else {
+            BookDTO pDTO = new BookDTO();
+            pDTO.setUser_id(Userid);
 
+            BookDTO book = bookService.getBookSeq(pDTO);
+
+            repository.createChatRoomDTO(book);
+
+            ChatRoomDTO cDTO = repository.findRoomById(book.getUser_id() + "-" + book.getBook_seq());
+
+            model.addAttribute("room", cDTO);
+
+            return "/chat/room";
+        }
 
      //   model.addAttribute("list", repository.findAllRooms());
         //UserId 로 maria Book db seller  userid  return list<bookDTO>
@@ -56,22 +81,22 @@ public class RoomController {
 
         //model(key, list<ChatRoomDTO>)
 
-        return "/chat/rooms";
+
     }
 
-    //채팅방 개설
-    @PostMapping(value = "/room")
-    public String create(@RequestParam String name, HttpSession session, RedirectAttributes rttr) throws Exception {
-        String Userid = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
-        BookDTO pDTO = new BookDTO();
-        pDTO.setUser_id(Userid);
-
-        BookDTO book = bookService.getBookSeq(pDTO);
-
-        log.info("Create chat room, name : " + name);
-        rttr.addFlashAttribute("roomName", repository.createChatRoomDTO(name, book));
-        return "redirect:/chat/rooms";
-    }
+//    //채팅방 개설
+//    @PostMapping(value = "/room")
+//    public String create(@RequestParam String name, HttpSession session, RedirectAttributes rttr) throws Exception {
+//        String Userid = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
+//        BookDTO pDTO = new BookDTO();
+//        pDTO.setUser_id(Userid);
+//
+//        BookDTO book = bookService.getBookSeq(pDTO);
+//
+//        log.info("Create chat room, name : " + name);
+//        rttr.addFlashAttribute("roomName", repository.createChatRoomDTO(name, book));
+//        return "redirect:/chat/rooms";
+//    }
 
     //채팅방 조회
     @GetMapping("/room")

@@ -8,11 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Password Reset - SB Admin</title>
+    <title>비밀번호찾기</title>
     <link href="/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 </head>
-<body class="bg-primary">
+<body class="bg-black">
 <div id="layoutAuthentication">
     <div id="layoutAuthentication_content">
         <main>
@@ -20,7 +20,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
-                            <div class="card-header"><h3 class="text-center font-weight-light my-4">Password Recovery</h3></div>
+                            <div class="card-header"><h3 class="text-center font-weight-light my-4">COQUAT</h3></div>
                             <div class="card-body">
                                 <div class="small mb-3 text-muted">Enter your email address and we will send you a link to reset your password.</div>
                                 <form name="f" method="post" accept-charset="UTF-8" action="/user/forgetPassword">

@@ -43,10 +43,10 @@ public class ChatRoomRepository {
         return chatRoomDTOMap.get(id);
     }
 
-    public ChatRoomDTO createChatRoomDTO(String name, BookDTO book) {
+    public ChatRoomDTO createChatRoomDTO(BookDTO book) {
 
         String roomId = book.getUser_id() + "-" + book.getBook_seq();
-        ChatRoomDTO room = ChatRoomDTO.create(roomId, name);
+        ChatRoomDTO room = ChatRoomDTO.create(roomId);
         chatRoomDTOMap.put(roomId, room);
 
         return room;

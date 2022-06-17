@@ -166,7 +166,28 @@
                             <input type="hidden" name="seller" value="<%=CmmUtil.nvl(rDTO.getUser_id())%>" >
                             <input type="hidden" name="product_addr" value="<%=CmmUtil.nvl(rDTO.getAddr())%>" >
                             <input type="hidden" name="product_mcoed" value="<%=CmmUtil.nvl(rDTO.getMcoed())%>" >
-                            <input type="submit"  value="예약하기" />
+                            <input type="hidden" name="product_price" value="<%=CmmUtil.nvl(rDTO.getPrice())%>" >
+                            <div class="row">
+                                <div class="col-3">
+                                    <input type="submit"  value="예약하기" /><h1>가격 : <%=CmmUtil.nvl(rDTO.getPrice())%></h1>
+                                </div>
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="pay_type" value="무통장" id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            무통장
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="pay_type" value="카드" id="flexRadioDefault2" checked>
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            카드
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </form>
                     </div>
                 </div>

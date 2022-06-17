@@ -86,11 +86,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Register</title>
+    <title>회원가입</title>
     <link href="/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 </head>
-<body class="bg-primary">
+<body class="bg-black">
 <div id="layoutAuthentication">
     <div id="layoutAuthentication_content">
         <main>
@@ -98,7 +98,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-7">
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
-                            <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
+                            <div class="card-header"><h3 class="text-center font-weight-light my-4">COQUAT</h3></div>
                             <div class="card-body">
                                 <form name="f" method="post" accept-charset="UTF-8" action="/user/insertUserInfo" onsubmit="return doRegUserCheck(this);">
                                     <div class="row mb-3">
@@ -150,9 +150,9 @@
                                                 <label for="addr2">address</label>
                                             </div>
                                         </div>
-                                        <div class="form-select-button mb-3">
-                                            <label for="inputUserrole">관리자로 가입하기</label>
-                                            <input  class="form-check " id="inputUserrole" name="userrole" type="checkbox" value="관리자"  />
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" name="userrole" value="관리자" >
+                                            <label class="form-check-label" for="flexSwitchCheckDefault">관리자로 회원가입</label>
                                         </div>
                                     </div>
                                     <div class="mt-4 mb-0">

@@ -194,6 +194,13 @@
 											   value="<%=CmmUtil.nvl(rDTO.getAddr()) %>" style="width: 450px"/>
 									</div>
 									</div>
+								<div class="row">
+									<div class="col-2" >가격</div>
+									<div class="col-2"  height="300px" valign="top">
+										<input type="text" name="price" maxlength="100"
+											   value="<%=CmmUtil.nvl(rDTO.getPrice()) %>" style="width: 450px"/>
+									</div>
+								</div>
 								</div>
 								<div class="row">
 									<div class="col-2" align="center">content</div>
@@ -215,7 +222,7 @@
 
 					</div>
 				</div>
-
+			</div>
 		</main>
 		<footer class="py-4 bg-light mt-auto">
 			<div class="container-fluid px-4">

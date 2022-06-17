@@ -152,6 +152,7 @@ public class ProductController {
             String user_id = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
             String product_name = CmmUtil.nvl(request.getParameter("product_name")); // 제목
             String addr = CmmUtil.nvl(request.getParameter("addr"));
+            String price = CmmUtil.nvl(request.getParameter("price")); //가격
             String mCome = CmmUtil.nvl(request.getParameter("mCome"));// 공지글 여부
             String contents = CmmUtil.nvl(request.getParameter("contents")); // 내용
             String filename = files.getOriginalFilename();
@@ -169,6 +170,7 @@ public class ProductController {
             log.info("product_name : " + product_name);
             log.info("addr : " + addr);
             log.info("contents : " + contents);
+            log.info("price : " + price);
 
             ProductDTO pDTO = new ProductDTO();
 
@@ -185,6 +187,7 @@ public class ProductController {
             pDTO.setProduct_name(product_name);
             pDTO.setAddr(addr);
             pDTO.setMcoed(mCome);
+            pDTO.setPrice(price);
             pDTO.setContents(contents);
             pDTO.setFilename(destinationFileName);
             pDTO.setFileoriname(filename);
@@ -353,12 +356,14 @@ public class ProductController {
             String product_name = CmmUtil.nvl(request.getParameter("product_name")); // 제목
             String addr = CmmUtil.nvl(request.getParameter("addr")); // 공지글 여부
             String contents = CmmUtil.nvl(request.getParameter("contents")); // 내용
+            String price = CmmUtil.nvl(request.getParameter("price"));//가격
 
             log.info("user_id : " + user_id);
             log.info("nSeq : " + nSeq);
             log.info("product_name : " + product_name);
             log.info("addr : " + addr);
             log.info("contents : " + contents);
+            log.info("price : " + price);
 
             ProductDTO pDTO = new ProductDTO();
 
@@ -367,7 +372,7 @@ public class ProductController {
             pDTO.setProduct_name(product_name);
             pDTO.setAddr(addr);
             pDTO.setContents(contents);
-
+            pDTO.setPrice(price);
             // 게시글 수정하기 DB
             productService.updateProduct(pDTO);
 

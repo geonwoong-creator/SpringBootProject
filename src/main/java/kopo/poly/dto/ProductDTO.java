@@ -10,8 +10,10 @@ public class ProductDTO {
     private String filename; // 저장할 파일
     private String fileoriname; // 실제 파일
     private String fileurl; // 파일 위치
-    private String addr;
-    private String mcoed;// 주소
+    private String addr; //주소
+    private String mcoed;// 행정코드
+    private String price;//가격
+    private String pay_type;//결재방법
     private String contents; // 글 내용
     private String user_id; // 작성자
     private String read_cnt; // 조회수

@@ -133,21 +133,16 @@
                         <div>
                             <%
                                 for(ChatRoomDTO cDTO : cList) {
-                                    String name = cDTO.getName();
                                     String roomId = cDTO.getRoomid();
                             %>
                             <ul>
-                                <li><a href="/chat/room?roomId=<%= roomId%>"><%= name%></a></li>
+                                <li><a href="/chat/room?roomId=<%= roomId%>"><%= roomId%></a></li>
                             </ul>
                             <%
                                 }
                             %>
                         </div>
                     </div>
-                    <form action="/chat/room" id="formAddRoom" method="post">
-                        <input type="text" name="name"  class="form-control">
-                        <button class="btn btn-secondary" id="createRoom">개설하기</button>
-                    </form>
         </main>
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">

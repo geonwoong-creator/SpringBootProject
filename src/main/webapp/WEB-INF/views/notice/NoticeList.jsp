@@ -123,12 +123,12 @@
                     </div>
                     <div class="card-body">
                         <div class="card-body" style="text-align: center">
-                            <div class="row btn-light">
-                                <div class="col-2 btn-dark">순번</div>
-                                <div class="col-4 btn-danger">제목</div>
-                                <div class="col-2 btn-primary">조회수</div>
-                                <div class="col-2 btn-warning">등록자</div>
-                                <div class="col-2 btn-success">등록일</div>
+                            <div class="row">
+                                <div class="col">순번</div>
+                                <div class="col-4">제목</div>
+                                <div class="col">조회수</div>
+                                <div class="col">등록자</div>
+                                <div class="col">등록일</div>
                             </div>
                             <%
                                 for (int i = 0; i < rList.size(); i++) {

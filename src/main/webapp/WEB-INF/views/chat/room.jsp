@@ -63,7 +63,7 @@
             var roomId = "<%=cDTO.getRoomid()%>";
             var username = "<%= session.getAttribute("SS_USER_ID")%>";
 
-            console.log(roomName + ", " + roomId + ", " + username);
+            console.log(roomId + ", " + username);
 
             var sockJs = new SockJS("/stomp/chat");
             //1. SockJS를 내부에 들고있는 stomp를 내어줌
@@ -200,7 +200,6 @@
         <main>
                     <div class="container">
                         <div class="col-6">
-                            <h1><%=CmmUtil.nvl(cDTO.getName())%></h1>
                         </div>
                         <div>
                             <div class="col-6">
