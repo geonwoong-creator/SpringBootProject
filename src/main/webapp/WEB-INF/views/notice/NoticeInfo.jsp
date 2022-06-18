@@ -139,6 +139,7 @@
                             <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="/main/Food">동일업종조회</a>
+                                    <a class="nav-link" href="/main/BookMap">주변동일업종조회</a>
                                 </nav>
                             </div>
                         </nav>
@@ -182,9 +183,10 @@
                                 <div class="col-2"><%=CmmUtil.nvl(rDTO.getRead_cnt())%>
                                 </div>
                             </div>
+                        <br>
                             <div class="row">
                                 <div class="col-2" align="center">content</div>
-                                <div class="col-2"  height="300px" valign="top">
+                                <div class="text-area"  height="300px" valign="top">
                                     <%=CmmUtil.nvl(rDTO.getContents()).replaceAll("\r\n", "<br/>") %>
                                 </div>
                             </div>

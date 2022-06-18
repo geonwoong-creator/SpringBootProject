@@ -162,6 +162,7 @@
 							<div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
 								<nav class="sb-sidenav-menu-nested nav">
 									<a class="nav-link" href="/main/Food">동일업종조회</a>
+									<a class="nav-link" href="/main/BookMap">주변동일업종조회</a>
 								</nav>
 							</div>
 						</nav>
