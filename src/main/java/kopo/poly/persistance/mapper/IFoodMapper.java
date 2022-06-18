@@ -8,4 +8,6 @@ public interface IFoodMapper {
 
     void InsertFood(FoodDTO pDTO) throws Exception;
 
+    FoodDTO getFoodInfo(FoodDTO pDTO) throws Exception;
+
 }

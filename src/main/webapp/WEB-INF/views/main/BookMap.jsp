@@ -1,26 +1,108 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
-<%@ page import="kopo.poly.dto.ProductDTO" %>
 <%@ page import="kopo.poly.util.CmmUtil" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%
- String maAddr  = request.getParameter("code");
- String maName  = request.getParameter("name");
+    List<HashMap<String, Object>> pList = (List<HashMap<String, Object>>) request.getAttribute("tList");
+    if(pList == null) {
+        pList = new ArrayList<>();
+    }
 %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <%
+        if(session.getAttribute("SS_USER_ID") == null) { //로그인이 안되었을때
+            //로그인 화면으로 이동
+            response.sendRedirect("/user/loginForm");
+        } else {
+    %>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>동일업종조회 상세페이지</title>
+    <title>동일업종조회</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-    </script>
 
+    <!--j쿼리 -->
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+
+        function MaketlList() {
+
+
+            console.log("시작")
+            $.ajax({
+                type : "get",
+                url : "/main/Food4",
+                dataType : "json",
+                data : {
+
+                },
+                contentType: 'application/json',
+                success : function(result) {
+                    let sList = JSON.stringify(result);
+                    let myObject = eval('(' + sList + ')');
+                    $("#maSelect").empty();
+                    for (i in myObject)
+                    {
+                        let Mcode = myObject[i]["bizesId"];
+                        let Mname = myObject[i]["bizesNm"];
+                        let Maddr = myObject[i]["rdnmAdr"]
+
+                        let color = ["bg-primary", "bg-success", "bg-warning", "bg-danger"];
+                        let randomNum = Math.floor(Math.random() * 4);
+                        let seletedColor = color[randomNum];
+                        $("#maSelect").append($(
+                            `<div class="col-xl-3 col-md-6">
+                                <div class="card \${seletedColor} text-white mb-4" name="twingkle">
+                                    <div class="card-body">\${Mname}</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="/main/FoodMap?code=\${Maddr}&name=\${Mname}">\${Maddr}</a>
+                                        <div class="small text-white"><svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M64 448c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L178.8 256L41.38 118.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25l-160 160C80.38 444.9 72.19 448 64 448z"></path></svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
+                                    </div>
+                                </div>
+                            </div>`
+                        ));
+                    }
+                },
+                error : function(req, status, error) {
+                    console.log(error);
+                },
+                complete : function(){
+                    console.log("ajax끝");
+                }
+            });
+        }
+
+        function callApi() {
+            console.log($("#mSelect").val());
+            console.log($("#sSelect").val());
+            console.log($("#maSelect").val());
+
+
+        }
+
+        function chgColor() {
+            $("div[name=twingkle]").each(function(index, item){
+                let color = ["bg-primary", "bg-success", "bg-warning", "bg-danger"];
+                let randomNum = Math.floor(Math.random() * 4);
+                let seletedColor = color[randomNum];
+                $(item).attr('class','card ' + seletedColor + ' text-white mb-4');
+            });
+        }
+        window.onload = function () {
+
+            setInterval(function() {
+                chgColor();
+            }, 1000);
+        }
+    </script>
 </head>
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -97,29 +179,22 @@
     </div>
     <div id="layoutSidenav_content">
         <main>
-            <div class="container-fluid px-4">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-table me-1"></i>
-                        동일업종조회 상세페이지
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="card-body" style="align-content: center">
+                            <button onclick="MaketlList()" type="submit">주변동일업종조회하기</button>
+                            <div class="container">
+                                <div class="row" id="maSelect">
+                                    <div class="col-xl-3 col-md-6">
 
-                    </div>
-                    <div class="card-body" style="text-align: center">
-                        <div class="row btn-light">
-                            <div class="col-2" align="center">가게 이름</div>
-                            <div class="col-2"><%=maName%>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-2" align="center">주소</div>
-                            <div class="col-2"><%=maAddr%>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6"></div>
-                            <div class="col-6" id="map" style="width: 500px; height: 500px;"></div>
-                        </div>
+                            <!--   <select class="form-select" id="maSelect">
+                               </select> -->
 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -140,51 +215,12 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="/js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="/assets/demo/chart-area-demo.js"></script>
+<script src="/assets/demo/chart-bar-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
 <script src="/js/datatables-simple-demo.js"></script>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=26940192f4e85cb5bd210882c0014e91&libraries=services"></script>
-<script>
-    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-        mapOption = {
-            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-            level: 3 // 지도의 확대 레벨
-        };
-
-    // 지도를 생성합니다
-    var map = new kakao.maps.Map(mapContainer, mapOption);
-
-    let juso = "<%=maName%>";
-    // 주소-좌표 변환 객체를 생성합니다
-    var geocoder = new kakao.maps.services.Geocoder();
-
-
-    // 주소로 좌표를 검색합니다
-    geocoder.addressSearch('<%=maAddr%>', function(result, status) {
-
-        // 정상적으로 검색이 완료됐으면
-        if (status === kakao.maps.services.Status.OK) {
-
-            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-            // 결과값으로 받은 위치를 마커로 표시합니다
-            var marker = new kakao.maps.Marker({
-                map: map,
-                position: coords
-            });
-
-            // 인포윈도우로 장소에 대한 설명을 표시합니다
-            var infowindow = new kakao.maps.InfoWindow({
-                content: '<div style="width:150px;text-align:center;padding:6px 0;">' + juso +'</div>'
-            });
-            infowindow.open(map, marker);
-
-            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-            map.setCenter(coords);
-        } else {
-            alert("검색 실패");
-        }
-    });
-</script>
+<%}%>
 </body>
 </html>

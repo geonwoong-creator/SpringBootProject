@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class FoodDTO {
 
-    private String indsmclsnm;
+    private String mmcode ; //중분류 코드
 
-    private String indsmclscd;
+    private String sscode ; //소분류 코드
 
     private String user_id;
 

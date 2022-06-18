@@ -25,4 +25,11 @@ public class FoodService implements IFoodService {
 
         foodMapper.InsertFood(pDTO);
     }
+
+    @Override
+    public FoodDTO getFoodInfo(FoodDTO pDTO) throws Exception {
+        log.info(this.getClass().getName() + ".getBookInfo start!");
+
+        return foodMapper.getFoodInfo(pDTO);
+    }
 }

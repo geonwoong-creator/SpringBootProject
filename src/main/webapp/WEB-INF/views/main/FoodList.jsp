@@ -203,6 +203,7 @@
                             <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="/main/Food">동일업종조회</a>
+                                    <a class="nav-link" href="/main/BookMap">주변동일업종조회</a>
                                 </nav>
                             </div>
                         </nav>
@@ -226,7 +227,8 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-10">
                         <div class="card-body" style="align-content: center">
-                            <select class="form-select" id="mSelect" onchange="getSmallList()">
+                            <form action="/FoodInsert" method="post">
+                            <select class="form-select" id="mSelect" name="mdcoed" onchange="getSmallList()">
                                 <option value="">전체</option>
                                 <%
                                     for(HashMap<String, Object> pDTO : pList) {
@@ -239,8 +241,10 @@
                                 %>
                             </select>
 
-                            <select class="form-select" id="sSelect" onchange="MaketlList()">
+                            <select class="form-select" id="sSelect" name="sscoed" onchange="MaketlList()">
                             </select>
+                                <button type="submit" class="btn-outline-warning">업종저장</button>
+                            </form>
                             <button class="btn btn-outline-success" type="button" onclick="callApi()">호출</button>
                             <div class="container">
                                 <div class="row" id="maSelect">
