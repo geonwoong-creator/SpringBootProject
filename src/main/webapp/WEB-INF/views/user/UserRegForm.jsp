@@ -76,10 +76,47 @@
                 }
             });
         };
+
+        var code = "";
+        /*이메일 인증번호 이메일 전송*/
+        function checkEmail() {
+
+            var email = $('#inputEmail').val();
+
+
+            console.log(email);
+            $.ajax({
+
+                type: "GET",
+                 url: "/mailCheck?email=" + email,
+                success:function (data) {
+
+                    console.log("data : " + data);
+                    alert("인증번호 전송")
+                    code = data;
+                }
+
+            });
+        };
+        function checkEmail_input() {
+
+            var inputCode = $('#inputEmailcode').val();
+
+            if (inputCode == code){
+                $('.email_input_re_1').css("display","inline-block");
+                $('.email_input_re_2').css("display","none");
+            }else {
+                $('.email_input_re_1').css("display","none");
+                $('.email_input_re_2').css("display","inline-block");
+            }
+        }
+
     </script>
     <style>
         .id_input_re_1{color: green; display: none;}
         .id_input_re_2{color: red; display: none;}
+        .email_input_re_1{color: green; display: none;}
+        .email_input_re_2{color: red; display: none;}
     </style>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -122,6 +159,23 @@
                                     <div class="form-floating mb-3">
                                         <input class="form-control" id="inputEmail" name="email" type="email" placeholder="name@example.com" />
                                         <label for="inputEmail">Email address</label>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 mb-md-0" id="inputEmailcode_box">
+                                                <input class="form-control" id="inputEmailcode" name="email_check"  required oninput="checkEmail_input()"  />
+                                                <label for="inputEmailcode">이메일 인증번호</label>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <span class="email_input_re_1" >인증번호가 일치합니다.</span>
+                                                <span class="email_input_re_2" >인증번호를 다시 확인해주세요.</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 mb-md-0">
+                                               <button type="button" class="mail_check_button" onclick="checkEmail()">메일인증</button>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-6">

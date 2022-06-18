@@ -1,6 +1,8 @@
 package kopo.poly.controller;
 
+import kopo.poly.dto.MailDTO;
 import kopo.poly.dto.UserInfoDTO;
+import kopo.poly.service.IMailService;
 import kopo.poly.service.IUserInfoService;
 import kopo.poly.util.CmmUtil;
 import kopo.poly.util.EncryptUtil;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Random;
 
 @Slf4j
 @Controller
@@ -22,6 +25,10 @@ public class UserInfoController {
      * */
     @Resource(name = "UserInfoService")
     private IUserInfoService userInfoService;
+
+    @Resource(name = "MailService")
+    private IMailService mailService;
+
 
 
     /**
@@ -478,6 +485,37 @@ public class UserInfoController {
         log.info("결과 : " + cnt);
 
         return cnt;
+    }
+
+    @RequestMapping(value = "/mailCheck", method = RequestMethod.GET)
+    @ResponseBody
+    public String mailCheckGET(String email) throws Exception {
+
+        log.info("이메일 데이터 전송 확인");
+        log.info("인증번호 : " + email);
+
+        Random random = new Random();
+        int checkNum = random.nextInt(888888) + 111111;
+        log.info("인증번호 :" + checkNum);
+
+        String title = "회원가입 인증 메일";
+        String content = "회원가입 인증 메일." +
+
+                        "인증 번호는 :" + checkNum + "입니다." +
+                        "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+
+
+
+        MailDTO mDTO = new MailDTO();
+        mDTO.setToMail(email);
+        mDTO.setTitle(title);
+        mDTO.setContents(content);
+
+        mailService.doSendMail(mDTO);
+
+        String num = Integer.toString(checkNum);
+
+        return num;
     }
 
 
