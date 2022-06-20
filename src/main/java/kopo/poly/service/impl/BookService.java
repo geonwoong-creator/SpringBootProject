@@ -51,4 +51,14 @@ public class BookService  implements IBookService {
 
         return bookMapper.getBookSeq(pDTO);
     }
+
+    @Transactional
+    @Override
+    public void deleteBook(BookDTO pDTO) throws Exception {
+
+        log.info(this.getClass().getName() + ".deleteNoticeInfo start!");
+
+        bookMapper.deleteBook(pDTO);
+
+    }
 }

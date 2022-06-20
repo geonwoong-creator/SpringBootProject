@@ -11,6 +11,7 @@ import kopo.poly.util.EncryptUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -87,7 +88,7 @@ public class BookController {
             MailDTO mDTO = new MailDTO();
             mDTO.setToMail(email);
             mDTO.setTitle("결제완료");
-            mDTO.setContents("주소 : " + product_addr + " 장소 이름 : " + product_name + " 가격 : " + product_price + " 결제 방법 : " + pay_type + " 결재가 완료 되었습니다." );
+            mDTO.setContents("Complete Book!" );
 
             mailService.doSendMail(mDTO);
 
@@ -133,6 +134,20 @@ public class BookController {
         }
 
         log.info(this.getClass().getName() + ".BookResult End!!");
+
+        return "/product/BookResult";
+    }
+    @GetMapping(value = "/bookDelete")
+    public String BookDelete(HttpSession session) throws Exception {
+
+        log.info(this.getClass().getName() + ".BookDelete Start!");
+
+        String userid = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
+
+        BookDTO rDTO = new BookDTO();
+        rDTO.setUser_id(userid);
+
+        bookService.deleteBook(rDTO);
 
         return "/product/BookResult";
     }

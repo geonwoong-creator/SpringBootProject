@@ -158,7 +158,7 @@
     </div>
     <div id="layoutSidenav_content">
         <main>
-            <div class="quickmenu" style="position: sticky;  top:80px;">
+            <div class="quickmenu" style="position: sticky; ">
                 <div class="card my-sm-2">
                     <h5 class="card-header">예약하기</h5>
                     <div class="card-body">
@@ -180,7 +180,7 @@
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="pay_type" value="카드" id="flexRadioDefault2" checked>
+                                        <input class="form-check-input" type="radio" name="pay_type" value="Card" id="flexRadioDefault2" checked>
                                         <label class="form-check-label" for="flexRadioDefault2">
                                             카드
                                         </label>

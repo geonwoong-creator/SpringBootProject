@@ -53,14 +53,16 @@ public class RoomController {
         uDTO = mainService.getUserInfo(uDTO);
 
         String userRole = uDTO.getUser_role();
-        if(userRole != null) {
+        if(userRole.equals("관리자")) {
             model.addAttribute("list", repository.findAllRooms());
+            log.info("여기");
             return "/chat/rooms";
+
 
         } else {
             BookDTO pDTO = new BookDTO();
             pDTO.setUser_id(Userid);
-
+            log.info("조기");
             BookDTO book = bookService.getBookSeq(pDTO);
 
             repository.createChatRoomDTO(book);

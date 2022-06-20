@@ -118,10 +118,10 @@
     <div id="layoutSidenav_content">
         <main>
             <h5 style="font-size: 60px;">COQUAT</h5>
-                <div>
-                    <img class="slide1" src="/images/1.png" style="height: 70%; width: 50%">
-                    <img class="slide1" src="/images/2.png" style="height: 70%; width: 50%">
-                    <img class="slide1" src="/images/3.png" style="height: 70%; width: 50%">
+                <div class="container">
+                    <img class="slide1" src="/images/1.png" style="height: 90%; width: 80%">
+                    <img class="slide1" src="/images/2.png" style="height: 90%; width: 80%">
+                    <img class="slide1" src="/images/3.png" style="height: 90%; width: 80%">
                 </div>
         </main>
         <footer class="py-4 bg-light mt-auto">

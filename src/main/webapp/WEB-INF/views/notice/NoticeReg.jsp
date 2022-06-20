@@ -36,11 +36,6 @@
 				}
 			}
 
-			if(noticeCheck==false){
-				alert("공지글 여부를 선택하시기 바랍니다.");
-				f.noticeYn[0].focus();
-				return false;
-			}
 
 			if(f.contents.value == ""){
 				alert("내용을 입력하시기 바랍니다.");
@@ -171,12 +166,6 @@
 							<div class="row btn-light">
 								<div class="col-2" >제목</div>
 								<div class="col-2"><input type="text" name="title" maxlength="100" style="width: 450px" /></div>
-							</div>
-							<div class="row">
-								<div class="col-2" align="center">공지글 여부</div>
-								<div class="col-2">예<input type="radio" name="noticeYn" value="Y" />
-									아니오<input type="radio" name="noticeYn" value="N" />
-								</div>
 							</div>
 							<div class="row">
 								<div class="col-2">

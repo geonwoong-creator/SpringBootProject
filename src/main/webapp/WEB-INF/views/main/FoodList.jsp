@@ -99,12 +99,9 @@
                         let Mname = myObject[i]["bizesNm"];
                         let Maddr = myObject[i]["rdnmAdr"]
 
-                        let color = ["bg-primary", "bg-success", "bg-warning", "bg-danger"];
-                        let randomNum = Math.floor(Math.random() * 4);
-                        let seletedColor = color[randomNum];
                         $("#maSelect").append($(
                         `<div class="col-xl-3 col-md-6">
-                                <div class="card \${seletedColor} text-white mb-4" name="twingkle">
+                                <div class="card bg-black text-white mb-4">
                                     <div class="card-body">\${Mname}</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                         <a class="small text-white stretched-link" href="/main/FoodMap?code=\${Maddr}&name=\${Mname}">\${Maddr}</a>
@@ -130,21 +127,6 @@
             console.log($("#maSelect").val());
 
 
-        }
-
-        function chgColor() {
-            $("div[name=twingkle]").each(function(index, item){
-                let color = ["bg-primary", "bg-success", "bg-warning", "bg-danger"];
-                let randomNum = Math.floor(Math.random() * 4);
-                let seletedColor = color[randomNum];
-                $(item).attr('class','card ' + seletedColor + ' text-white mb-4');
-            });
-        }
-        window.onload = function () {
-
-            setInterval(function() {
-                chgColor();
-            }, 1000);
         }
     </script>
 </head>

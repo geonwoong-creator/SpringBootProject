@@ -33,4 +33,10 @@
         WHERE USER_ID = #{user_id}
     </select>
 
+    <delete id="deleteBook" parameterType="BookDTO">
+        DELETE FROM BOOK
+        WHERE USER_ID = #{user_id}
+
+    </delete>
+
 </mapper>

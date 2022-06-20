@@ -140,7 +140,7 @@
 									<div class="col-2">주소</div>
 									<div class="col-2"><input type="text" name="addr" maxlength="100" style="width: 450px" />
 									</div>
-									<div class="col-2"><input type="text" name="price" placeholder="가격을 입력해주세요." />
+									<div class="col-2 offset-2"><input type="text" name="price" placeholder="가격을 입력해주세요." />
 									</div>
 									<select class="form-select" name="mCome">
 										<option value="">시군구 선택</option>

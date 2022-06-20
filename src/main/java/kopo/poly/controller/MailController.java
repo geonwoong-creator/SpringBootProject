@@ -46,6 +46,7 @@ public class MailController {
         // 메일 발송할 정보 넣기 위한 DTO객체 생성하기
         MailDTO pDTO = new MailDTO();
 
+
         // 웹에서 받은 값을 DTO에 넣기
         pDTO.setToMail(toMail); // 받는 사람을 DTO 저장
         pDTO.setTitle(title); // 제목을 DTO 저장

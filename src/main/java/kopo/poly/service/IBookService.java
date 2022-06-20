@@ -9,4 +9,6 @@ public interface IBookService {
     BookDTO getBookInfo(BookDTO pDTO) throws Exception;
 
     BookDTO getBookSeq(BookDTO pDTO) throws Exception;
+
+    void deleteBook(BookDTO pDTO) throws Exception;
 }

@@ -22,4 +22,6 @@ public interface IUserInfoMapper {
     void updatePassword(UserInfoDTO pDTO) throws Exception;
 
     int idCheck(String user_id) throws Exception;
+
+    void deleteUser(UserInfoDTO pDTO) throws Exception;
 }

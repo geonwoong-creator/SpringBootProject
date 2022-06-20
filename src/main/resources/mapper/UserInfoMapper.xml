@@ -71,4 +71,10 @@
         where USER_ID = #{user_id}
     </select>
 
+    <delete id="deleteUser" parameterType="UserInfoDTO">
+        DELETE FROM USER_INFO
+        where USER_ID = #{user_id}
+
+    </delete>
+
 </mapper>

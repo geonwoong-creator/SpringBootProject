@@ -499,10 +499,7 @@ public class UserInfoController {
         log.info("인증번호 :" + checkNum);
 
         String title = "회원가입 인증 메일";
-        String content = "회원가입 인증 메일." +
-
-                        "인증 번호는 :" + checkNum + "입니다." +
-                        "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+        String content = "Mail Code : " + checkNum ;
 
 
 
@@ -516,6 +513,33 @@ public class UserInfoController {
         String num = Integer.toString(checkNum);
 
         return num;
+    }
+
+    @GetMapping(value = "/UserDelete")
+    public String NoticeDelete(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+
+        log.info(this.getClass().getName() + ".UserDelete start!");
+
+
+
+            String userid = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID")); // 글번호(PK)
+
+            log.info("회원탈퇴 : " + userid);
+
+            UserInfoDTO rDTO = new UserInfoDTO();
+
+            rDTO.setUser_id(userid);
+
+            userInfoService.deleteUser(rDTO);
+            // 게시글 삭제하기 DB
+
+
+            log.info(this.getClass().getName() + ".NoticeDelete end!");
+
+            // 결과 메시지 전달하기
+
+
+        return "/user/LoginForm";
     }
 
 

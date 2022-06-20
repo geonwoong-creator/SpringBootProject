@@ -11,7 +11,7 @@
     <groupId>kopo</groupId>
     <artifactId>poly</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <!--<packaging>war</packaging> -->
+    <packaging>war</packaging>
     <name>SpringBootPRJ</name>
     <description>SpringBootPRJ</description>
     <properties>
@@ -131,6 +131,13 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>28.2-jre</version>
+        </dependency>
+
+        <!-- 메일 발송-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-email</artifactId>
+            <version>1.5</version>
         </dependency>
 
 

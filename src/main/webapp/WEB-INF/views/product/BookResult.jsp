@@ -134,7 +134,8 @@ if (rDTO == null) {
                                 <form action="/main/Mapinfo" name="mCome">
                                     <button type="submit" value="<%=CmmUtil.nvl(rDTO.getProduct_mcoed())%>">주변상권조회</button>
                                 </form>
-                                <a class="button-bar" href="/chat/rooms">상담채팅</a>
+                                <a class="btn-outline-success" href="/chat/rooms">상담채팅</a>
+                                <a class="btn-outline-warning" href="/bookDelete">예약취소</a>
                             </div>
                         </div>
                     </div>

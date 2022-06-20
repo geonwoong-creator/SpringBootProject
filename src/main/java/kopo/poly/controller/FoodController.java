@@ -215,8 +215,8 @@ public class FoodController {
 
         try{
             String user_id = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
-            String mmcode  = CmmUtil.nvl(request.getParameter("mSelect "));
-            String sscode  = CmmUtil.nvl(request.getParameter("sSelect "));
+            String mmcode  = CmmUtil.nvl(request.getParameter("mdcoed"));
+            String sscode  = CmmUtil.nvl(request.getParameter("sscoed"));
 
             log.info("user_id : " + user_id);
             log.info("indsmclsnm : " + mmcode);

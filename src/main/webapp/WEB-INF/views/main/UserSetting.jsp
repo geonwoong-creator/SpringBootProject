@@ -11,6 +11,11 @@
         rDTO = new UserInfoDTO();
 
     }
+
+    String userRole = rDTO.getUser_role();
+    if(userRole == null) {
+        userRole = "";
+    }
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -140,6 +145,14 @@
                             </div>
                             <div class="card-footer">
                                 <a class="btn btn-success" href="/main/UserBno">사업자 정보 확인하기</a>
+                                <button class="btn btn-danger" onclick="deleteUser()">회원탈퇴</button>
+                                <%
+                                    if(!userRole.equals("")) {
+                                %>
+                                <a class="btn btn-primary" href="/chat/rooms">상담채팅</a>
+                                <%
+                                    }
+                                %>
                             </div>
                         </div>
                     </div>
@@ -167,6 +180,13 @@
 <script src="/assets/demo/chart-bar-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
 <script src="/js/datatables-simple-demo.js"></script>
+<script>
+    function deleteUser() {
+        if(confirm("정말로 탈퇴하시겠습니까?")) {
+            location.href = "/UserDelete";
+        }
+    }
+</script>
 <%}%>
 </body>
 </html>

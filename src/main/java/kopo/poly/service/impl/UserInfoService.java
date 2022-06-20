@@ -147,7 +147,7 @@ public class UserInfoService implements IUserInfoService {
             mDTO.setTitle("로그인 알림!"); //제목
 
             //메일 내용에 가입자 이름넣어서 내용 발송
-            mDTO.setContents(DateUtil.getDateTime("yyyy.MM.dd 24h:mm:ss") + "에 " + CmmUtil.nvl(rDTO.getUser_name()) + "님이 로그인하였습니다.");
+            mDTO.setContents(DateUtil.getDateTime("yyyy.MM.dd 24h:mm:ss") + "<p>"+ CmmUtil.nvl(rDTO.getUser_id()) + "Login" +"</p>");
 
             //회원 가입이 성공했기 때문에 메일을 발송함
             mailService.doSendMail(mDTO);
@@ -219,7 +219,8 @@ public class UserInfoService implements IUserInfoService {
 
             String url = "localhost:10000/resetPassword?id=" + pDTO.getUser_id();
             //메일 내용에 가입자 비밀번호 넣어서 내용 발송
-            mDTO.setContents(DateUtil.getDateTime("yyyy.MM.dd 24h:mm:ss") + "에 " + CmmUtil.nvl(rDTO.getUser_name()) + "님이 비밀번호를 찾으셨습니다. " + url);
+            mDTO.setContents(DateUtil.getDateTime("yyyy.MM.dd 24h:mm:ss") + "<p>" + CmmUtil.nvl(rDTO.getUser_id()) + "</p>" +
+                    "<p>" + "resetPassword. " + "</p>" + "<p>" + url + "</p>");
 
 
             //비밀 번호 찾기가 성공했기 때문에 메일을 발송함
@@ -258,4 +259,15 @@ public class UserInfoService implements IUserInfoService {
 
         return cnt;
     }
+
+    @Transactional
+    @Override
+    public void deleteUser(UserInfoDTO pDTO) throws Exception {
+
+        log.info(this.getClass().getName() + ".deleteNoticeInfo start!");
+
+        userInfoMapper.deleteUser(pDTO);
+
+    }
+
 }
