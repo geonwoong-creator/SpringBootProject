@@ -12,12 +12,12 @@
             success : function (data){
                 var a = '';
                 $.each(data, function (key, value){
-                    a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-                    a += '<div class="commentInfo' + value.cno + ' ">' + '댓글번호 : ' + value.cno + '/작성자 :' + value.user_id;
+                    a += '<div class="container" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
+                    a += '<div class="card-header' + value.cno + ' ">' + '댓글번호 : ' + value.cno + '/작성자 :' + value.user_id;
                     a += '<br>'
                     a += '<button class="btn btn-warning" onclick="commentUpdate(' + value.cno + ',\'' + value.content + '\');"> 수정 </button>';
                     a += '<button class="btn btn-danger" onclick="commentDelete(' + value.cno + ');"> 삭제 </button> </div>';
-                    a += '<div class="commentContent' + value.cno + '"> <p> 내용 : ' + value.content + '</p>';
+                    a += '<div class="card-body' + value.cno + '"> <p> 내용 : ' + value.content + '</p>';
                     a += '</div></div>';
 
                 });

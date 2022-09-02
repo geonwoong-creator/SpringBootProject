@@ -13,7 +13,16 @@
 	<title>게시판 글쓰기</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
 	<link href="/css/styles.css" rel="stylesheet" />
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script> <!-- j쿼리-->
 	<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+	<!--썸머노트-->
+	<script src="/js/summernote-lite.js"></script>
+	<script src="/js/summernote/lang/summernote-ko-KR.js"></script>
+	<link rel="stylesheet" href="/css/summernote/font/summernote-lite.css">
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-ko-KR.js"></script>
+	<!-- include summernote css/js-->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
 	<script type="text/javascript">
 		//전송시 유효성 체크
 		function doSubmit(f){
@@ -74,9 +83,43 @@
 		}
 
 
+		function summernotestart() {
+			//여기 아래 부분
+				console.log("시작");
+			$('#summernote').summernote({
+				// 에디터 높이
+				height: 150,
+				// 에디터 한글 설정
+				lang: "ko-KR",
+				focus : true,
+				toolbar: [
+					// 글꼴 설정
+					['fontName', ['fontNames']],
+					// 글자 크기 설정
+					['fontSize', ['fontSizes']],
+					// 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
+					['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+					// 글자색
+					['color', ['forecolor','color']],
+					// 표만들기
+					['table', ['table']],
+					// 글머리 기호, 번호매기기, 문단정렬
+					['para', ['ul', 'ol', 'paragraph']],
+					// 줄간격
+					['height', ['height']],
+					// 코드보기, 확대해서보기, 도움말
+					['view', ['codeview','fullscreen', 'help']]
+				],
+				// 추가한 글꼴
+				fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
+				// 추가한 폰트사이즈
+				fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']});
+		};
+
+
 	</script>
 </head>
-<body class="sb-nav-fixed" onload="doOnload();">
+<body class="sb-nav-fixed" onload="summernotestart()" >
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 	<!-- Navbar Brand-->
 	<a class="navbar-brand ps-3" href="/main/main">COQUAT</a>
@@ -168,8 +211,9 @@
 								<div class="col-2"><input type="text" name="title" maxlength="100" style="width: 450px" /></div>
 							</div>
 							<div class="row">
-								<div class="col-2">
-									<textarea name="contents" style="width: 550px; height: 400px"></textarea>
+								<div class="col-2">content</div>
+								<div class="col-6">
+									<textarea name="contents" id="summernote" rows="10" cols="100" required></textarea>
 								</div>
 							</div>
 							<div class="row">

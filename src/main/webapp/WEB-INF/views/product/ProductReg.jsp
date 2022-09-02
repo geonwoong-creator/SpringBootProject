@@ -43,9 +43,30 @@
 
 			return tcount;
 		}
+
+		function removeHtml(text) {
+			$('#removehtml')
+			{
+				console.log("시작")
+				text = text.replace(/<br>/ig, "\n"); // <br>을 엔터로 변경
+				text = text.replace(/&nbsp;/ig, " "); // 공백
+				// HTML 태그제거
+				text = text.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "");
+
+				// shkim.add.
+				text = text.replace(/<(no)?script[^>]*>.*?<\/(no)?script>/ig, "");
+				text = text.replace(/<style[^>]*>.*<\/style>/ig, "");
+				text = text.replace(/<(\"[^\"]*\"|\'[^\']*\'|[^\'\">])*>/ig, "");
+				text = text.replace(/<\\w+\\s+[^<]*\\s*>/ig, "");
+				text = text.replace(/&[^;]+;/ig, "");
+				text = text.replace(/\\s\\s+/ig, "");
+
+				return text;
+			};
+		};
 	</script>
 </head>
-<body class="sb-nav-fixed" onload="doOnload();">
+<body class="sb-nav-fixed" onload="doOnload(); removeHtml();">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 	<!-- Navbar Brand-->
 	<a class="navbar-brand ps-3" href="/main/main">COQUAT</a>
@@ -162,7 +183,7 @@
 								</div>
 								<div class="row">
 									<div class="col-2">
-										<textarea name="contents" style="width: 550px; height: 400px"></textarea>
+										<textarea name="contents" id="removehtml" style="width: 550px; height: 400px" required></textarea>
 									</div>
 								</div>
 								<div class="row">
